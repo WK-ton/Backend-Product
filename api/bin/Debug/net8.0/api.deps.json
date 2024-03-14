@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v8.0": {
       "api/1.0.0": {
         "dependencies": {
+          "Dapper": "2.1.37",
           "Microsoft.AspNetCore.OpenApi": "8.0.2",
           "Microsoft.EntityFrameworkCore": "8.0.0",
           "Microsoft.EntityFrameworkCore.Design": "8.0.0",
@@ -16,6 +17,14 @@
         },
         "runtime": {
           "api.dll": {}
+        }
+      },
+      "Dapper/2.1.37": {
+        "runtime": {
+          "lib/net7.0/Dapper.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.1.37.16431"
+          }
         }
       },
       "Humanizer.Core/2.14.1": {
@@ -552,6 +561,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "Dapper/2.1.37": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-SJerIzPgxpwrqo1vozuQy1+8tgDr8QmGKjafkV5OSSMLcFmB8VW9JMAYzQW6pBEpgVHQtjK6dkw6gdcwTSB9pg==",
+      "path": "dapper/2.1.37",
+      "hashPath": "dapper.2.1.37.nupkg.sha512"
     },
     "Humanizer.Core/2.14.1": {
       "type": "package",

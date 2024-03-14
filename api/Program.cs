@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 //interface
-builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 
 
 
