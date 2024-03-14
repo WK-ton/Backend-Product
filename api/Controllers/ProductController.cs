@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using api.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
+using api.Repository.Interface;
 
 namespace api.Controllers
 {
@@ -14,39 +15,24 @@ namespace api.Controllers
     [Route("api/[controller]/[action]")]
     public class ProductController : ControllerBase
     {
-        private readonly AppDbContext _appDbContext;
-        public ProductController(AppDbContext appDbContext)
+        private readonly IProductRepository _IProductRepository;
+        public ProductController(IProductRepository IProductRepository)
         {
-            _appDbContext = appDbContext;
+            _IProductRepository = IProductRepository;
         }
 
         [HttpPost]
         public async Task<IActionResult> AddProduct(Product product)
         {
-            _appDbContext.Products.Add(product);
-            await _appDbContext.SaveChangesAsync();
-
-            return Ok(product);
+            var result = await _IProductRepository.AddProduct(product);
+            return Ok(result);
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllProducts()
         {
-            var products = await _appDbContext.Products.ToListAsync();
-            return Ok(products);
-        }
-
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetProductById(int id)
-        {
-            var product = await _appDbContext.Products.FindAsync(id);
-
-            if (product == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(product);
+            var result = await _IProductRepository.GetAllProducts();
+            return Ok(result);
         }
     }
 }
