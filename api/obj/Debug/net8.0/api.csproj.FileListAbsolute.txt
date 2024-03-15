@@ -105,3 +105,9 @@
 /Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/bin/Debug/net8.0/zh-Hant/Microsoft.CodeAnalysis.Workspaces.resources.dll
 /Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/obj/Debug/net8.0/api.sourcelink.json
 /Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/bin/Debug/net8.0/Dapper.dll
+/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/bin/Debug/net8.0/BCrypt.Net-Next.dll
+/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/bin/Debug/net8.0/Microsoft.IdentityModel.Abstractions.dll
+/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/bin/Debug/net8.0/Microsoft.IdentityModel.JsonWebTokens.dll
+/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/bin/Debug/net8.0/Microsoft.IdentityModel.Logging.dll
+/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/bin/Debug/net8.0/Microsoft.IdentityModel.Tokens.dll
+/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/bin/Debug/net8.0/System.IdentityModel.Tokens.Jwt.dll

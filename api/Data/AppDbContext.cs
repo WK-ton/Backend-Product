@@ -11,8 +11,7 @@ namespace api.Data
     {
         public AppDbContext(DbContextOptions options) : base(options) {}
 
-        public DbSet<Product> Products {get; set;}
-        public DbSet<signUpModel> signUp {get; set;} 
+        public DbSet<Authentication> signUp {get; set;} 
         
     }
 }

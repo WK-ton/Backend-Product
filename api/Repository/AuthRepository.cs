@@ -17,6 +17,12 @@ using System.Text.RegularExpressions;
 using System.Transactions;
 using Dapper;
 using System.Linq;
+using BCrypt.Net;
+using System.Security.Claims;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Cryptography;
 
 
 namespace api.Repository
@@ -25,38 +31,12 @@ namespace api.Repository
     {
         private readonly AppDbContext _appDbContext;
 
-        public AuthRepository(AppDbContext appDbContext)
+        private readonly IConfiguration _configuration;
+
+        public AuthRepository(AppDbContext appDbContext, IConfiguration configuration)
         {
             _appDbContext = appDbContext;
-        }
-
-        public Task<Result> AddProduct(Product product)
-        {
-            try
-            {
-                _appDbContext.Products.Add(product);
-                _appDbContext.SaveChanges();
-                return Task.FromResult(new Result
-                {
-                    success = true,
-                    result = product
-                });
-
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error on AddProduct : " + ex.Message);
-            }
-        }
-
-        public async Task<Result> GetAllProducts()
-        {
-            var products = await _appDbContext.Products.ToListAsync();
-            return new Result
-            {
-                success = true,
-                result = products
-            };
+            _configuration = configuration;
         }
 
         public async Task<Result> signUp(Register data)
@@ -75,12 +55,12 @@ namespace api.Repository
 
                 using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, TransactionScopeAsyncFlowOption.Enabled))
                 {
-                    signUpModel S = new();
+                    Authentication S = new();
                     S.id = S.id!;
                     S.name = data.name;
                     S.email = data.email;
-                    S.password = data.password;
-                    S.passwordRepeat = data.passwordRepeat;
+                    S.password = BCrypt.Net.BCrypt.HashPassword(data.password, BCrypt.Net.BCrypt.GenerateSalt(10));
+                    S.passwordRepeat = BCrypt.Net.BCrypt.HashPassword(data.passwordRepeat, BCrypt.Net.BCrypt.GenerateSalt(10));
                     S.phone = data.phone;
                     S.image = data.image;
                     await _appDbContext.signUp.AddRangeAsync(S);
@@ -117,18 +97,18 @@ namespace api.Repository
             if (string.IsNullOrEmpty(data.phone) || !phoneRegex.IsMatch(data.phone)) return "หมายเลขโทรศัพท์ของคุณไม่ถูกต้อง";
             if (data.phone.Length != 10) return "กรุณากรอกเบอร์โทรศัพท์ให้ครบ 10 ตำแหน่ง";
 
-            
+
             var email = await CheckerData(data.email, null);
             if (email == true) return "อีเมลใช้งานแล้ว";
 
             var phone = await CheckerData(null, data.phone);
             if (phone == true) return "เบอร์โทรศัพท์ใช้งานแล้ว";
-            
+
 
             return null;
         }
 
-        public async Task<bool> CheckerData (string email, string phone)
+        public async Task<bool> CheckerData(string email, string phone)
         {
             var res = await _appDbContext.signUp.FirstOrDefaultAsync(u => u.email == email || u.phone == phone);
             return res != null;
@@ -138,23 +118,83 @@ namespace api.Repository
         {
             try
             {
-                string? strError = await ValidateData(data);
-                if (strError != null)
+                var result = await _appDbContext.signUp.FirstOrDefaultAsync(u => u.email == data.email);
+                if (result == null) return new Result
                 {
-                    return new Result
-                    {
-                        success = false,
-                        errorMessage = strError
-                    };
-                }
-                    
-                
-                
+                    success = false,
+                    errorMessage = "อีเมลไม่ถูกต้อง"
+                };
+                if (!BCrypt.Net.BCrypt.Verify(data.password, result.password)) return new Result
+                {
+                    success = false,
+                    errorMessage = "รหัสผ่านไม่ถูกต้อง"
+                };
+
+                string token = CreateToken(result);
+
+                return new Result
+                {
+                    success = true,
+                    result = new {token, username = result.name}
+                };
+
             }
             catch (Exception ex)
             {
                 throw new Exception("Error on login : " + ex.Message);
             }
         }
+
+        // private string CreateToken (signUpModel user)
+        // {
+        //     List<Claim> claims = new List<Claim>
+        //     {
+        //         new Claim(ClaimTypes.Name, user.name)
+
+        //     };
+
+
+
+        //     var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
+        //         _configuration.GetSection("AppSettings:Token").Value!));
+
+        //     var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+
+        //     var token =  new JwtSecurityToken(
+        //         claims: claims,
+        //         expires: DateTime.Now.AddDays(1),
+        //         signingCredentials: cred
+        //     );
+
+        //     var jwt = new JwtSecurityTokenHandler().WriteToken(token);
+
+        //     return jwt;
+        // }
+
+        private string CreateToken(Authentication user)
+        {
+            List<Claim> claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, user.name)
+            };
+            var key = new byte[64];
+            using (var rng = RandomNumberGenerator.Create())
+            {
+                rng.GetBytes(key);
+            }
+
+            var cred = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha512Signature);
+
+            var token = new JwtSecurityToken(
+                claims: claims,
+                expires: DateTime.Now.AddDays(1),
+                signingCredentials: cred
+            );
+
+            var jwt = new JwtSecurityTokenHandler().WriteToken(token);
+
+            return jwt;
+        }
+
     }
 }

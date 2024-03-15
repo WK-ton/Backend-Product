@@ -22,19 +22,12 @@ namespace api.Controllers
             _IAuthRepository = IAuthRepository;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> AddProduct(Product product)
-        {
-            var result = await _IAuthRepository.AddProduct(product);
-            return Ok(result);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> GetAllProducts()
-        {
-            var result = await _IAuthRepository.GetAllProducts();
-            return Ok(result);
-        }
+        // [HttpGet]
+        // public async Task<IActionResult> GetAllProducts()
+        // {
+        //     var result = await _IAuthRepository.GetAllProducts();
+        //     return Ok(result);
+        // }
         [HttpPost]
         public async Task<IActionResult> signUp(Register data)
         {

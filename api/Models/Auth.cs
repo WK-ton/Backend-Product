@@ -1,6 +1,6 @@
 namespace api.Models
 {
-    public class signUpModel
+    public class Authentication
     {
         public int id { get; set; }
         public string? name { get; set; } = null;
