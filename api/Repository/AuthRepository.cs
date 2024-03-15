@@ -16,6 +16,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 using System.Transactions;
 using Dapper;
+using System.Linq;
 
 
 namespace api.Repository
@@ -75,7 +76,7 @@ namespace api.Repository
                 using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, TransactionScopeAsyncFlowOption.Enabled))
                 {
                     signUpModel S = new();
-                    // S.id = data.id!;
+                    S.id = S.id!;
                     S.name = data.name;
                     S.email = data.email;
                     S.password = data.password;
@@ -116,43 +117,44 @@ namespace api.Repository
             if (string.IsNullOrEmpty(data.phone) || !phoneRegex.IsMatch(data.phone)) return "หมายเลขโทรศัพท์ของคุณไม่ถูกต้อง";
             if (data.phone.Length != 10) return "กรุณากรอกเบอร์โทรศัพท์ให้ครบ 10 ตำแหน่ง";
 
+            
+            var email = await CheckerData(data.email, null);
+            if (email == true) return "อีเมลใช้งานแล้ว";
 
-            // var res = await CheckerData(data.phone);
-            // if (res != null) return "เบอร์โทรศัพท์ถูกใช้งานแล้ว";
-            // var phone = await CheckerData(null, null, data.phone);
-            // if (phone != null) return "เบอร์โทรศัพท์ถูกใช้งานแล้ว";
-
+            var phone = await CheckerData(null, data.phone);
+            if (phone == true) return "เบอร์โทรศัพท์ใช้งานแล้ว";
+            
 
             return null;
         }
 
-        // public async Task<signUpModel> CheckerData(string? phone)
-        // {
-        //     try
-        //     {
-        //         string query = @"SELECT * FROM Product.signUp WHERE phone =@phone";
+        public async Task<bool> CheckerData (string email, string phone)
+        {
+            var res = await _appDbContext.signUp.FirstOrDefaultAsync(u => u.email == email || u.phone == phone);
+            return res != null;
+        }
 
-        //         DynamicParameters param = new();
-        //         // param.Add("@email", email);
-        //         // param.Add("@email", email);
-        //         param.Add("@phone", phone);
-
-        //         signUpModel data = await _appDbContext.Database.GetDbConnection().QuerySingleOrDefaultAsync<signUpModel>(query, param);
-
-        //         if (data == null)
-        //         {
-        //             return null;
-        //         }
-
-        //         return data;
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         throw new Exception("Error on CheckerData: " + ex.Message);
-        //     }
-        // }
-
-
-
+        public async Task<Result> login(Login data)
+        {
+            try
+            {
+                string? strError = await ValidateData(data);
+                if (strError != null)
+                {
+                    return new Result
+                    {
+                        success = false,
+                        errorMessage = strError
+                    };
+                }
+                    
+                
+                
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error on login : " + ex.Message);
+            }
+        }
     }
 }

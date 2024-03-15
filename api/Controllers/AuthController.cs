@@ -41,5 +41,12 @@ namespace api.Controllers
             var result = await _IAuthRepository.signUp(data);
             return Ok(result);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> login(Login data)
+        {
+            var result = await _IAuthRepository.login(data);
+            return Ok(result);
+        }
     }
 }
