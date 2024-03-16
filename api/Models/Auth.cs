@@ -2,7 +2,7 @@ namespace api.Models
 {
     public class Authentication
     {
-        public int id { get; set; }
+        public int? id { get; set; } = null;
         public string? name { get; set; } = null;
         public string? email { get; set; } = null;
         public string? password { get; set; } = null;

@@ -41,5 +41,11 @@ namespace api.Controllers
             var result = await _IAuthRepository.login(data);
             return (result.success) ? Ok(result) : BadRequest(result);
         }
+        [HttpPut]
+        public async Task<IActionResult> updateProfile(Register data)
+        {
+            var result = await _IAuthRepository.updateProfile(data);
+            return (result.success) ? Ok(result) : BadRequest(result);
+        }
     }
 }

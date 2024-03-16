@@ -7,5 +7,6 @@ namespace api.Repository.Interface
     {
         Task<Result> signUp (Register data);
         Task<Result> login (Login data);
+        Task<Result> updateProfile (Register data);
     }
 }

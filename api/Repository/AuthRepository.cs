@@ -40,11 +40,11 @@ namespace api.Repository
             // _configuration = configuration;
         }
 
-        public async Task<Result> signUp(Register data)
+        public async Task<Result> saveData(Register data, string action)
         {
             try
             {
-                string? strError = await ValidateData(data);
+                string? strError = await ValidateData(data, action);
                 if (strError != null)
                 {
                     return new Result
@@ -53,29 +53,68 @@ namespace api.Repository
                         errorMessage = strError
                     };
                 }
-
-                using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, TransactionScopeAsyncFlowOption.Enabled))
+                using (TransactionScope scope = new(TransactionScopeAsyncFlowOption.Enabled))
                 {
                     Authentication S = new();
-                    S.id = S.id!;
+                    S.id = data.id!;
                     S.name = data.name;
-                    S.email = data.email;
-                    S.password = BCrypt.Net.BCrypt.HashPassword(data.password, BCrypt.Net.BCrypt.GenerateSalt(10));
-                    S.passwordRepeat = BCrypt.Net.BCrypt.HashPassword(data.passwordRepeat, BCrypt.Net.BCrypt.GenerateSalt(10));
-                    S.phone = data.phone;
-                    S.image = data.image;
-                    await _appDbContext.signUp.AddRangeAsync(S);
+
+                    if (action == "CREATE")
+                    {
+                        S.email = data.email;
+                        S.password = BCrypt.Net.BCrypt.HashPassword(data.password, BCrypt.Net.BCrypt.GenerateSalt(10));
+                        S.passwordRepeat = BCrypt.Net.BCrypt.HashPassword(data.passwordRepeat, BCrypt.Net.BCrypt.GenerateSalt(10));
+                        S.phone = data.phone;
+                        S.image = data.image;
+                    }
+
+                    if (action == "CREATE")
+                    {
+                        await _appDbContext.signUp.AddAsync(S);
+                    }
+                    else if (action == "UPDATE")
+                    {
+                        var idRecord = await _appDbContext.signUp.FirstOrDefaultAsync(x => x.id == S.id);
+                        if (idRecord != null)
+                        {
+                            idRecord.name = S.name;
+
+                            _appDbContext.signUp.Update(idRecord);
+                        }
+                        else
+                        {
+                            return new Result
+                            {
+                                success = false,
+                                errorMessage = "ไม่พบข้อมูล"
+                            };
+                        }
+
+                    }
 
                     await _appDbContext.SaveChangesAsync();
                     scope.Complete();
+
+                    if (action == "CREATE")
+                    {
+
+                        return new Result
+                        {
+                            success = true,
+                            result = "สมัครสมาชิกสำเร็จ"
+                        };
+                    }
+                    else
+                    {
+                        return new Result
+                        {
+                            success = true,
+                            result = "อัพเดทข้อมูลสำเร็จ"
+                        };
+                    }
+
+
                 }
-
-                return new Result
-                {
-                    success = true,
-                    result = "สมัครสมาชิกสำเร็จ"
-                };
-
             }
             catch (Exception ex)
             {
@@ -83,7 +122,7 @@ namespace api.Repository
             }
         }
 
-        public async Task<string?> ValidateData(Register data)
+        public async Task<string?> ValidateData(Register data, string? action)
         {
             RegularExpression chk = new();
 
@@ -93,28 +132,35 @@ namespace api.Repository
 
             if (String.IsNullOrEmpty(data.name)) return "กรุณาใส่ชื่อให้ถูกต้อง";
             if (chk.IsMaximumLengh(data.name, 45)) return "ชื่อต้องไม่เกิน 45 ตัวอักษร";
-            if (String.IsNullOrEmpty(data.email) || !emailRegex.IsMatch(data.email)) return "กรุณาใส่อีเมลให้ถูกต้อง";
-            if (String.IsNullOrEmpty(data.password) || string.IsNullOrEmpty(data.passwordRepeat)) return "กรุณาใส่รหัสผ่านให้ถูกต้อง";
-            if (data.password.Length < 6) return "กรุณากรอกรหัสผ่านอย่างน้อย 6 ตัวอักษร";
-            if (data.passwordRepeat.Length < 6) return "กรุณากรอกรหัสผ่านอย่างน้อย 6 ตัวอักษร";
-            if (data.password != data.passwordRepeat) return "รหัสผ่านของคุณไม่ตรงกัน";
-            if (String.IsNullOrEmpty(data.phone) || !phoneRegex.IsMatch(data.phone)) return "หมายเลขโทรศัพท์ของคุณไม่ถูกต้อง";
-            if (data.phone.Length != 10) return "กรุณากรอกเบอร์โทรศัพท์ให้ครบ 10 ตำแหน่ง";
 
+            if (action == "CREATE")
+            {
+                if (String.IsNullOrEmpty(data.email) || !emailRegex.IsMatch(data.email)) return "กรุณาใส่อีเมลให้ถูกต้อง";
+                if (String.IsNullOrEmpty(data.password) || string.IsNullOrEmpty(data.passwordRepeat)) return "กรุณาใส่รหัสผ่านให้ถูกต้อง";
+                if (data.password.Length < 6) return "กรุณากรอกรหัสผ่านอย่างน้อย 6 ตัวอักษร";
+                if (data.passwordRepeat.Length < 6) return "กรุณากรอกรหัสผ่านอย่างน้อย 6 ตัวอักษร";
+                if (data.password != data.passwordRepeat) return "รหัสผ่านของคุณไม่ตรงกัน";
+                if (String.IsNullOrEmpty(data.phone) || !phoneRegex.IsMatch(data.phone)) return "หมายเลขโทรศัพท์ของคุณไม่ถูกต้อง";
+                if (data.phone.Length != 10) return "กรุณากรอกเบอร์โทรศัพท์ให้ครบ 10 ตำแหน่ง";
 
-            var email = await CheckerData(data.email, null);
-            if (email == true) return "อีเมลใช้งานแล้ว";
+                var email = await CheckerData(data.email, null, null);
+                if (email == true) return "อีเมลใช้งานแล้ว";
 
-            var phone = await CheckerData(null, data.phone);
-            if (phone == true) return "เบอร์โทรศัพท์ใช้งานแล้ว";
-
+                var phone = await CheckerData(null, data.phone, null);
+                if (phone == true) return "เบอร์โทรศัพท์ใช้งานแล้ว";
+            }
+            // else if (action == "UPDATE")
+            // {
+            //         var nameExists = await CheckerData(null, null, data.name);
+            //         if (nameExists == true) return "ชื่อใช้งานแล้ว";       
+            // }
 
             return null;
         }
 
-        public async Task<bool> CheckerData(string email, string phone)
+        public async Task<bool> CheckerData(string email, string phone, string name)
         {
-            var res = await _appDbContext.signUp.FirstOrDefaultAsync(u => u.email == email || u.phone == phone);
+            var res = await _appDbContext.signUp.FirstOrDefaultAsync(u => u.email == email || u.phone == phone || u.name == name);
             return res != null;
         }
 
@@ -139,7 +185,7 @@ namespace api.Repository
                 return new Result
                 {
                     success = true,
-                    result = new {token, username = result.name}
+                    result = new { token, username = result.name }
                 };
 
             }
@@ -174,5 +220,14 @@ namespace api.Repository
             return jwt;
         }
 
+        public Task<Result> updateProfile(Register data)
+        {
+            return saveData(data, "UPDATE");
+        }
+
+        public Task<Result> signUp(Register data)
+        {
+            return saveData(data, "CREATE");
+        }
     }
 }
