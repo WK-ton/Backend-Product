@@ -32,14 +32,14 @@ namespace api.Controllers
         public async Task<IActionResult> signUp(Register data)
         {
             var result = await _IAuthRepository.signUp(data);
-            return Ok(result);
+            return (result.success) ? Ok(result) : BadRequest(result);
         }
 
         [HttpPost]
         public async Task<IActionResult> login(Login data)
         {
             var result = await _IAuthRepository.login(data);
-            return Ok(result);
+            return (result.success) ? Ok(result) : BadRequest(result);
         }
     }
 }

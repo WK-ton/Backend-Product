@@ -23,6 +23,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Cryptography;
+using AxonsMoveTMSService.Utils;
 
 
 namespace api.Repository
@@ -31,12 +32,12 @@ namespace api.Repository
     {
         private readonly AppDbContext _appDbContext;
 
-        private readonly IConfiguration _configuration;
+        // private readonly IConfiguration _configuration;
 
         public AuthRepository(AppDbContext appDbContext, IConfiguration configuration)
         {
             _appDbContext = appDbContext;
-            _configuration = configuration;
+            // _configuration = configuration;
         }
 
         public async Task<Result> signUp(Register data)
@@ -84,17 +85,20 @@ namespace api.Repository
 
         public async Task<string?> ValidateData(Register data)
         {
+            RegularExpression chk = new();
+
             var phoneRegex = new Regex(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$");
             var emailRegex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
 
 
-            if (string.IsNullOrEmpty(data.name)) return "กรุณาใส่ชื่อให้ถูกต้อง";
-            if (string.IsNullOrEmpty(data.email) || !emailRegex.IsMatch(data.email)) return "กรุณาใส่อีเมลให้ถูกต้อง";
-            if (string.IsNullOrEmpty(data.password) || string.IsNullOrEmpty(data.passwordRepeat)) return "กรุณาใส่รหัสผ่านให้ถูกต้อง";
+            if (String.IsNullOrEmpty(data.name)) return "กรุณาใส่ชื่อให้ถูกต้อง";
+            if (chk.IsMaximumLengh(data.name, 45)) return "ชื่อต้องไม่เกิน 45 ตัวอักษร";
+            if (String.IsNullOrEmpty(data.email) || !emailRegex.IsMatch(data.email)) return "กรุณาใส่อีเมลให้ถูกต้อง";
+            if (String.IsNullOrEmpty(data.password) || string.IsNullOrEmpty(data.passwordRepeat)) return "กรุณาใส่รหัสผ่านให้ถูกต้อง";
             if (data.password.Length < 6) return "กรุณากรอกรหัสผ่านอย่างน้อย 6 ตัวอักษร";
             if (data.passwordRepeat.Length < 6) return "กรุณากรอกรหัสผ่านอย่างน้อย 6 ตัวอักษร";
             if (data.password != data.passwordRepeat) return "รหัสผ่านของคุณไม่ตรงกัน";
-            if (string.IsNullOrEmpty(data.phone) || !phoneRegex.IsMatch(data.phone)) return "หมายเลขโทรศัพท์ของคุณไม่ถูกต้อง";
+            if (String.IsNullOrEmpty(data.phone) || !phoneRegex.IsMatch(data.phone)) return "หมายเลขโทรศัพท์ของคุณไม่ถูกต้อง";
             if (data.phone.Length != 10) return "กรุณากรอกเบอร์โทรศัพท์ให้ครบ 10 ตำแหน่ง";
 
 
@@ -144,32 +148,6 @@ namespace api.Repository
                 throw new Exception("Error on login : " + ex.Message);
             }
         }
-
-        // private string CreateToken (signUpModel user)
-        // {
-        //     List<Claim> claims = new List<Claim>
-        //     {
-        //         new Claim(ClaimTypes.Name, user.name)
-
-        //     };
-
-
-
-        //     var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
-        //         _configuration.GetSection("AppSettings:Token").Value!));
-
-        //     var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
-
-        //     var token =  new JwtSecurityToken(
-        //         claims: claims,
-        //         expires: DateTime.Now.AddDays(1),
-        //         signingCredentials: cred
-        //     );
-
-        //     var jwt = new JwtSecurityTokenHandler().WriteToken(token);
-
-        //     return jwt;
-        // }
 
         private string CreateToken(Authentication user)
         {

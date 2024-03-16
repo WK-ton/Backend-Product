@@ -12,6 +12,7 @@ namespace api.Data
         public AppDbContext(DbContextOptions options) : base(options) {}
 
         public DbSet<Authentication> signUp {get; set;} 
+        public DbSet<BangKhenModel> BangKhen {get; set;}
         
     }
 }
