@@ -10,4 +10,11 @@ namespace api.Models
         public string? phone { get; set; } = null;
         public string? image {get; set;} = null;
     }
+
+    public class otpPhone
+    {
+        public int? id {get; set;} = null; 
+        public string? phone {get; set;} = null;
+        public string? otp {get; set;} = null;
+    }
 }

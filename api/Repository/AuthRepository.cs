@@ -64,7 +64,7 @@ namespace api.Repository
                         S.email = data.email;
                         S.password = BCrypt.Net.BCrypt.HashPassword(data.password, BCrypt.Net.BCrypt.GenerateSalt(10));
                         S.passwordRepeat = BCrypt.Net.BCrypt.HashPassword(data.passwordRepeat, BCrypt.Net.BCrypt.GenerateSalt(10));
-                        S.phone = data.phone;
+                        // S.phone = data.phone;
                         S.image = data.image;
                     }
 
@@ -77,7 +77,12 @@ namespace api.Repository
                         var idRecord = await _appDbContext.signUp.FirstOrDefaultAsync(x => x.id == S.id);
                         if (idRecord != null)
                         {
-                            idRecord.name = S.name;
+                            idRecord.name = data.name;
+                            // idRecord.email = data.email;
+                            // idRecord.password = BCrypt.Net.BCrypt.HashPassword(data.password, BCrypt.Net.BCrypt.GenerateSalt(10));
+                            // idRecord.passwordRepeat = BCrypt.Net.BCrypt.HashPassword(data.passwordRepeat, BCrypt.Net.BCrypt.GenerateSalt(10));
+                            // idRecord.phone = S.phone;
+                            //idRecord.image = data.image;
 
                             _appDbContext.signUp.Update(idRecord);
                         }
@@ -126,12 +131,12 @@ namespace api.Repository
         {
             RegularExpression chk = new();
 
-            var phoneRegex = new Regex(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$");
             var emailRegex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
 
 
             if (String.IsNullOrEmpty(data.name)) return "กรุณาใส่ชื่อให้ถูกต้อง";
             if (chk.IsMaximumLengh(data.name, 45)) return "ชื่อต้องไม่เกิน 45 ตัวอักษร";
+
 
             if (action == "CREATE")
             {
@@ -140,27 +145,18 @@ namespace api.Repository
                 if (data.password.Length < 6) return "กรุณากรอกรหัสผ่านอย่างน้อย 6 ตัวอักษร";
                 if (data.passwordRepeat.Length < 6) return "กรุณากรอกรหัสผ่านอย่างน้อย 6 ตัวอักษร";
                 if (data.password != data.passwordRepeat) return "รหัสผ่านของคุณไม่ตรงกัน";
-                if (String.IsNullOrEmpty(data.phone) || !phoneRegex.IsMatch(data.phone)) return "หมายเลขโทรศัพท์ของคุณไม่ถูกต้อง";
-                if (data.phone.Length != 10) return "กรุณากรอกเบอร์โทรศัพท์ให้ครบ 10 ตำแหน่ง";
 
-                var email = await CheckerData(data.email, null, null);
+                var email = await CheckerData(data.email, null);
                 if (email == true) return "อีเมลใช้งานแล้ว";
-
-                var phone = await CheckerData(null, data.phone, null);
-                if (phone == true) return "เบอร์โทรศัพท์ใช้งานแล้ว";
             }
-            // else if (action == "UPDATE")
-            // {
-            //         var nameExists = await CheckerData(null, null, data.name);
-            //         if (nameExists == true) return "ชื่อใช้งานแล้ว";       
-            // }
+
 
             return null;
         }
 
-        public async Task<bool> CheckerData(string email, string phone, string name)
+        public async Task<bool> CheckerData(string email, string name)
         {
-            var res = await _appDbContext.signUp.FirstOrDefaultAsync(u => u.email == email || u.phone == phone || u.name == name);
+            var res = await _appDbContext.signUp.FirstOrDefaultAsync(u => u.email == email);
             return res != null;
         }
 
@@ -228,6 +224,114 @@ namespace api.Repository
         public Task<Result> signUp(Register data)
         {
             return saveData(data, "CREATE");
+        }
+
+        // private string GenerateOTP()
+        // {
+        //     Random otp = new Random();
+        //     return otp.Next(100000, 999999).ToString();
+        // }
+
+        public async Task<Result> sendOTP(authPhone data)
+        {
+            try
+            {
+                Random otp = new Random();
+                
+                var phoneRegex = new Regex(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$");
+
+                if (String.IsNullOrEmpty(data.phone) || !phoneRegex.IsMatch(data.phone))
+                    return new Result
+                    {
+                        result = "หมายเลขโทรศัพท์ของคุณไม่ถูกต้อง"
+                    };
+                if (data.phone.Length != 10)
+                    return new Result
+                    {
+                        result = "กรุณากรอกเบอร์โทรศัพท์ให้ครบ 10 ตำแหน่ง"
+                    };
+
+                var checkPhone = await _appDbContext.signUp.FirstOrDefaultAsync(s => s.phone == data.phone);
+                if (checkPhone == null)
+                {
+                    otpPhone o = new();
+                    o.id = data.id!;
+                    o.phone = data.phone!;
+                    o.otp = otp.Next(100000, 999999).ToString();
+
+                    await _appDbContext.otp.AddAsync(o);
+
+                    await _appDbContext.SaveChangesAsync();
+                }
+                else
+                {
+                    return new Result
+                    {
+                        success = false,
+                        errorMessage = "เบอร์โทรศัพท์มีอยู่ในระบบแล้ว"
+                    };
+                }
+
+                return new Result
+                {
+                    success = true,
+                    result = "ส่งรหัส OTP สําเร็จ"
+                };
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error on SendOTP : " + ex.Message);
+            }
+        }
+
+
+        public async Task<Result> activeOTP(otpPhone data)
+        {
+            try
+            {
+
+                var result = await _appDbContext.otp.FirstOrDefaultAsync(o => o.id == data.id && o.otp == data.otp);
+                if (result != null)
+                {
+                    var checkPhone = await _appDbContext.signUp.FirstOrDefaultAsync(s => s.phone == result.phone);
+                    if (checkPhone == null)
+                    {
+                        Authentication a = new();
+                        a.id = a.id!;
+                        a.phone = result.phone!;
+
+                        await _appDbContext.signUp.AddAsync(a);
+                        await _appDbContext.SaveChangesAsync();
+                    }
+                    else
+                    {
+                        return new Result
+                        {
+                            success = false,
+                            errorMessage = "เบอร์โทรศัพท์มีอยู่ในระบบแล้ว"
+                        };
+                    }
+
+                    return new Result
+                    {
+                        success = true,
+                        result = "ยืีนยัน OTP สําเร็จ"
+                    };
+                }
+                else
+                {
+                    return new Result
+                    {
+                        success = false,
+                        errorMessage = "รหัส OTP ไม่ถูกต้อง"
+                    };
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error on SendOTP : " + ex.Message);
+            }
         }
     }
 }

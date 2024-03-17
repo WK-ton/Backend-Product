@@ -47,5 +47,19 @@ namespace api.Controllers
             var result = await _IAuthRepository.updateProfile(data);
             return (result.success) ? Ok(result) : BadRequest(result);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> sendOTP (authPhone data)
+        {
+            var result = await _IAuthRepository.sendOTP(data);
+            return (result.success) ? Ok(result) : BadRequest(result);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> activeOTP (otpPhone data)
+        {
+            var result = await _IAuthRepository.activeOTP(data);
+            return (result.success) ? Ok(result) : BadRequest(result);
+        }
     }
 }

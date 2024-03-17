@@ -8,5 +8,8 @@ namespace api.Repository.Interface
         Task<Result> signUp (Register data);
         Task<Result> login (Login data);
         Task<Result> updateProfile (Register data);
+        Task<Result> sendOTP (authPhone data);
+        Task<Result> activeOTP (otpPhone data);
+
     }
 }

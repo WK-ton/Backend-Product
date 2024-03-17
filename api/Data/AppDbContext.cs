@@ -13,6 +13,7 @@ namespace api.Data
 
         public DbSet<Authentication> signUp {get; set;} 
         public DbSet<BangKhenModel> BangKhen {get; set;}
+        public DbSet<otpPhone> otp {get; set;} 
         
     }
 }
