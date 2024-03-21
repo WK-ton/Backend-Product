@@ -19,7 +19,7 @@ namespace api.Repository
         {
             _appDbContext = appDbContext;
         }
-        public async Task<Result> sendOTP(SendOTP data)
+        public async Task<Result> sendOTP(SendOTP data, string? action)
         {
             try
             {
@@ -39,16 +39,35 @@ namespace api.Repository
                     };
 
                 var checkPhone = await _appDbContext.signUp.FirstOrDefaultAsync(s => s.phone == data.phone);
-                if (checkPhone == null)
+                if (action == "phoneSignUp")
                 {
-                    SaveOTP o = new();
-                    o.id = data.id!;
-                    o.phone = data.phone!;
-                    o.otp = otp.Next(100000, 999999).ToString();
+                    if (checkPhone == null)
+                    {
+                        SaveOTP o = new();
+                        o.id = data.id!;
+                        o.phone = data.phone!;
+                        o.otp = otp.Next(100000, 999999).ToString();
 
-                    await _appDbContext.saveOtp.AddAsync(o);
+                        await _appDbContext.saveOtp.AddAsync(o);
 
-                    await _appDbContext.SaveChangesAsync();
+                        await _appDbContext.SaveChangesAsync();
+
+                    }
+                }
+                else if (action == "phoneLogin")
+                {
+                    if (checkPhone != null)
+                    {
+                        SaveOTP o = new();
+                        o.id = data.id!;
+                        o.phone = data.phone!;
+                        o.otp = otp.Next(100000, 999999).ToString();
+
+                        await _appDbContext.saveOtp.AddAsync(o);
+
+                        await _appDbContext.SaveChangesAsync();
+
+                    }
                 }
                 else
                 {
@@ -64,6 +83,8 @@ namespace api.Repository
                     success = true,
                     result = "ส่งรหัส OTP สําเร็จ"
                 };
+
+
             }
             catch (Exception ex)
             {
@@ -76,16 +97,10 @@ namespace api.Repository
         {
             try
             {
-
                 var result = await _appDbContext.saveOtp.FirstOrDefaultAsync(o => o.id == data.id && o.otp == data.otp);
                 if (result != null)
                 {
-                    // if (String.IsNullOrEmpty(data.phone)) return new Result
-                    // {
-                    //     success = false,
-                    //     errorMessage = "กรุณาระบุเบอร์โทรศัพท์"
-                    // };
-
+                    
                     var checkPhone = await _appDbContext.signUp.FirstOrDefaultAsync(s => s.phone == result.phone);
                     if (checkPhone == null)
                     {
@@ -110,6 +125,7 @@ namespace api.Repository
                         success = true,
                         result = "ยืีนยัน OTP สําเร็จ"
                     };
+
                 }
                 else
                 {

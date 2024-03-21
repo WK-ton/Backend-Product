@@ -31,11 +31,12 @@ namespace api.Repository
     public class AuthRepository : IAuthRepository
     {
         private readonly AppDbContext _appDbContext;
+        private readonly IOtpRepository _OtpRepository;
 
-
-        public AuthRepository(AppDbContext appDbContext, IConfiguration configuration)
+        public AuthRepository(AppDbContext appDbContext, IOtpRepository OtpRepository)
         {
             _appDbContext = appDbContext;
+            _OtpRepository = OtpRepository;
         }
 
         public async Task<Result> saveData(Register data, string action)
@@ -189,11 +190,11 @@ namespace api.Repository
             }
         }
 
-        public async Task<Result> loginPhone (LoginPhone data)
+        public async Task<Result> loginPhone(LoginPhone data)
         {
             try
             {
-                if(String.IsNullOrEmpty(data.phone))
+                if (String.IsNullOrEmpty(data.phone))
                 {
                     return new Result
                     {
@@ -212,13 +213,36 @@ namespace api.Repository
                     };
                 }
 
-                string token = CreateToken(res);
-
-                return new Result
+                var otpResult = await _OtpRepository.sendOTP(new SendOTP
                 {
-                    success = true,
-                    result = new { token, username = res.name}
-                };
+                    phone = data.phone
+                }, "phoneLogin");
+
+                if (!otpResult.success)
+                {
+                    return new Result
+                    {
+                        success = false,
+                        errorMessage = "ส่ง OTP ไม่สําเร็จ"
+                    };
+                }
+                else
+                {
+                    return new Result
+                    {
+                        success = true,
+                        result = "ส่ง OTP สําเร็จ"
+                        //result = new { token, username = res.name }
+                    };
+                }
+
+                // string token = CreateToken(res);
+
+                // return new Result
+                // {
+                //     success = true,
+                //     result = new { token, username = res.name }
+                // };
             }
             catch (Exception ex)
             {
@@ -228,10 +252,19 @@ namespace api.Repository
 
         private string CreateToken(SignUp user)
         {
-            List<Claim> claims = new List<Claim>
+
+            var claims = new List<Claim>();
+
+
+            if (user.name != null)
             {
-                new Claim(ClaimTypes.HomePhone, user.phone)
-            };
+                claims.Add(new Claim(ClaimTypes.Name, user.name));
+            }
+            else
+            {
+                claims.Add(new Claim(ClaimTypes.HomePhone, user.phone));
+            }
+
             var key = new byte[64];
             using (var rng = RandomNumberGenerator.Create())
             {

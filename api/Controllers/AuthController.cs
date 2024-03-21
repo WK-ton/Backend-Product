@@ -58,9 +58,9 @@ namespace api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> sendOTP (SendOTP data)
+        public async Task<IActionResult> sendOTP (SendOTP data, string? action)
         {
-            var result = await _IOtpRepository.sendOTP(data);
+            var result = await _IOtpRepository.sendOTP(data, action);
             return (result.success) ? Ok(result) : BadRequest(result);
         }
 

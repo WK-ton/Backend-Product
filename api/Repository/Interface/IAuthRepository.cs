@@ -12,7 +12,7 @@ namespace api.Repository.Interface
     }
     public interface IOtpRepository
     {
-        Task<Result> sendOTP (SendOTP data);
+        Task<Result> sendOTP (SendOTP data, string? action);
         Task<Result> activeOTP (ActiveOTP data);
     }
 }
