@@ -21,16 +21,21 @@ namespace api.Dto
     {
         public string? email {get; set;} = null;
         public string? password {get; set;} = null;
+        public string? phone {get; set;} = null;
 
     }
+    public class LoginPhone
+    {
+        public string? phone {get; set;} = null;
+    }
 
-    public class authPhone
+    public class SendOTP
     {
         public int? id {get; set;} = null;
         public string? phone {get; set;} = null;
     }
 
-    public class OTP
+    public class ActiveOTP
     {
         public int? id {get; set;} = null;
         public string? phone {get; set;} = null;

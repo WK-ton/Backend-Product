@@ -7,9 +7,12 @@ namespace api.Repository.Interface
     {
         Task<Result> signUp (Register data);
         Task<Result> login (Login data);
+        Task<Result> loginPhone (LoginPhone data);
         Task<Result> updateProfile (Register data);
-        Task<Result> sendOTP (authPhone data);
-        Task<Result> activeOTP (otpPhone data);
-
+    }
+    public interface IOtpRepository
+    {
+        Task<Result> sendOTP (SendOTP data);
+        Task<Result> activeOTP (ActiveOTP data);
     }
 }

@@ -17,9 +17,11 @@ namespace api.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IAuthRepository _IAuthRepository;
-        public AuthController(IAuthRepository IAuthRepository)
+        private readonly IOtpRepository _IOtpRepository;
+        public AuthController(IAuthRepository IAuthRepository, IOtpRepository IOtpRepository)
         {
             _IAuthRepository = IAuthRepository;
+            _IOtpRepository = IOtpRepository;
         }
 
         // [HttpGet]
@@ -41,6 +43,13 @@ namespace api.Controllers
             var result = await _IAuthRepository.login(data);
             return (result.success) ? Ok(result) : BadRequest(result);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> loginPhone (LoginPhone data)
+        {
+            var result = await _IAuthRepository.loginPhone(data);
+            return (result.success) ? Ok(result) : BadRequest(result);
+        }
         [HttpPut]
         public async Task<IActionResult> updateProfile(Register data)
         {
@@ -49,16 +58,16 @@ namespace api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> sendOTP (authPhone data)
+        public async Task<IActionResult> sendOTP (SendOTP data)
         {
-            var result = await _IAuthRepository.sendOTP(data);
+            var result = await _IOtpRepository.sendOTP(data);
             return (result.success) ? Ok(result) : BadRequest(result);
         }
 
         [HttpPost]
-        public async Task<IActionResult> activeOTP (otpPhone data)
+        public async Task<IActionResult> activeOTP (ActiveOTP data)
         {
-            var result = await _IAuthRepository.activeOTP(data);
+            var result = await _IOtpRepository.activeOTP(data);
             return (result.success) ? Ok(result) : BadRequest(result);
         }
     }

@@ -1,6 +1,6 @@
 namespace api.Models
 {
-    public class Authentication
+    public class SignUp
     {
         public int? id { get; set; } = null;
         public string? name { get; set; } = null;
@@ -11,7 +11,7 @@ namespace api.Models
         public string? image {get; set;} = null;
     }
 
-    public class otpPhone
+    public class SaveOTP
     {
         public int? id {get; set;} = null; 
         public string? phone {get; set;} = null;
