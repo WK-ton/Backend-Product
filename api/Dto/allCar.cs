@@ -13,6 +13,6 @@ namespace api.Dto
         public string? lastStation {get; set;} = null;
         public string? roadDesc {get; set;} = null;
         public DateTime? timeOut {get; set;} = null;
-        public string? roadImage {get; set;} = null;
+        public IFormFile? roadImage {get; set;} = null;
     }
 }

@@ -1,11 +1,39 @@
 {
   "Version": 1,
-  "Hash": "pyaMSCEWRZ4nvKCja2XnniyJFEBxfxA7VVvbHvFd6MQ=",
+  "Hash": "AXyE3N6+Lg81dPIYokMdiWQN8cBhCFOV8xJVWKvFziY=",
   "Source": "api",
   "BasePath": "_content/api",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": []
+  "DiscoveryPatterns": [
+    {
+      "Name": "api/wwwroot",
+      "Source": "api",
+      "ContentRoot": "/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/wwwroot/",
+      "BasePath": "_content/api",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/wwwroot/images/_79e0ca89-9ca5-4c10-9566-d227f0675e3cIMG_0968.jpg",
+      "SourceId": "api",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/wwwroot/",
+      "BasePath": "_content/api",
+      "RelativePath": "images/_79e0ca89-9ca5-4c10-9566-d227f0675e3cIMG_0968.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/images/_79e0ca89-9ca5-4c10-9566-d227f0675e3cIMG_0968.jpg"
+    }
+  ]
 }

@@ -17,19 +17,10 @@ namespace api.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IAuthRepository _IAuthRepository;
-        private readonly IOtpRepository _IOtpRepository;
-        public AuthController(IAuthRepository IAuthRepository, IOtpRepository IOtpRepository)
+        public AuthController(IAuthRepository IAuthRepository)
         {
             _IAuthRepository = IAuthRepository;
-            _IOtpRepository = IOtpRepository;
         }
-
-        // [HttpGet]
-        // public async Task<IActionResult> GetAllProducts()
-        // {
-        //     var result = await _IAuthRepository.GetAllProducts();
-        //     return Ok(result);
-        // }
         [HttpPost]
         public async Task<IActionResult> signUp(Register data)
         {
@@ -58,16 +49,16 @@ namespace api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> sendOTP (SendOTP data, string? action)
+        public async Task<IActionResult> singUpPhone (SendOTP data)
         {
-            var result = await _IOtpRepository.sendOTP(data, action);
+            var result = await _IAuthRepository.singUpPhone(data);
             return (result.success) ? Ok(result) : BadRequest(result);
         }
 
         [HttpPost]
         public async Task<IActionResult> activeOTP (ActiveOTP data)
         {
-            var result = await _IOtpRepository.activeOTP(data);
+            var result = await _IAuthRepository.activeOTP(data);
             return (result.success) ? Ok(result) : BadRequest(result);
         }
     }

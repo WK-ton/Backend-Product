@@ -9,7 +9,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 //interface
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
-builder.Services.AddScoped<IOtpRepository, OtpRepository>();
 builder.Services.AddScoped<ICarsBangkhenRepository, CarsBangkhenRepository>();
 
 

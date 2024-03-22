@@ -22,7 +22,14 @@ namespace api.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateData(BangKhen data)
         {
-            var res = await _ICarsBangkhenRepository.CreateData(data);
+            var res = await _ICarsBangkhenRepository.createData(data);
+            return (res.success) ? Ok(res) : BadRequest(res);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateData(BangKhen data)
+        {
+            var res = await _ICarsBangkhenRepository.updateData(data);
             return (res.success) ? Ok(res) : BadRequest(res);
         }
     }

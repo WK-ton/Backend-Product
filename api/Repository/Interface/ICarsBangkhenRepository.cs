@@ -8,7 +8,8 @@ namespace api.Repository.Interface
 {
     public interface ICarsBangkhenRepository
     {
-        Task<Result> CreateData (BangKhen data);
+        Task<Result> createData (BangKhen data);
+        Task<Result> updateData (BangKhen data);
              
     }
 }

@@ -111,3 +111,4 @@
 /Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/bin/Debug/net8.0/Microsoft.IdentityModel.Logging.dll
 /Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/bin/Debug/net8.0/Microsoft.IdentityModel.Tokens.dll
 /Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/bin/Debug/net8.0/System.IdentityModel.Tokens.Jwt.dll
+/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/bin/Debug/net8.0/api.staticwebassets.runtime.json
