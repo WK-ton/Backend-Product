@@ -105,5 +105,26 @@ namespace api.Repository
         {
             return saveData(data, "UPDATE", data.roadImage!);
         }
+
+        public async Task<Result> deleteData (Cars data, string? action)
+        {
+            var res = await _ICarsBangkhenRepository.DeleteHub(data, action);
+            if (res != null)
+            {
+                return new Result
+                {
+                    success = true,
+                    result = "ลบข้อมูลสำเร็จ"
+                };
+            }
+            else
+            {
+                return new Result
+                {
+                    success = false,
+                    result = "ลบข้อมูลไม่สำเร็จ"
+                };
+            }
+        }
     }
 }

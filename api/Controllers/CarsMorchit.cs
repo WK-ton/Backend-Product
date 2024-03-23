@@ -33,6 +33,11 @@ namespace api.Controllers
             return (res.success) ? Ok(res) : BadRequest(res);
         }
 
-
+        [HttpDelete]
+        public async Task<IActionResult> DeleteData (Cars data, string? action = "Morchit")
+        {
+            var res = await _IMorchitRepository.deleteData(data, action);
+            return (res.success) ? Ok(res) : BadRequest(res);
+        }
     }
 }

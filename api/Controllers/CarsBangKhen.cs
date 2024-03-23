@@ -32,5 +32,12 @@ namespace api.Controllers
             var res = await _ICarsBangkhenRepository.updateData(data);
             return (res.success) ? Ok(res) : BadRequest(res);
         }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteData(Cars data)
+        {
+            var res = await _ICarsBangkhenRepository.deleteData(data);
+            return (res.success) ? Ok(res) : BadRequest(res);
+        }
     }
 }

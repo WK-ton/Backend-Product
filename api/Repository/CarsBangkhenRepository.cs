@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Metadata;
 using System.Threading.Tasks;
+using System.IO;
 using System.Transactions;
 using api.Data;
 using api.Dto;
 using api.Models;
 using api.Repository.Interface;
 using Microsoft.EntityFrameworkCore;
-
 
 
 namespace api.Repository
@@ -37,22 +37,20 @@ namespace api.Repository
                     };
                 }
 
-                // if (action == "CREATE")
+                // var checkDateTime = await _AppdbContext.BangKhen.FirstOrDefaultAsync(x => DateTime.Equals(x.timeOut, data.timeOut));
+                // if (checkDateTime != null)
                 // {
-                var checkDateTime = await _AppdbContext.BangKhen.FirstOrDefaultAsync(x => DateTime.Equals(x.timeOut, data.timeOut));
-                if (checkDateTime != null)
-                {
-                    return new Result
-                    {
-                        success = false,
-                        result = "วันที่และเวลาถูกบันทึกไปแล้ว"
-                    };
-                }
+                //     return new Result
+                //     {
+                //         success = false,
+                //         result = "วันที่และเวลาถูกบันทึกไปแล้ว"
+                //     };
                 // }
+
                 using (TransactionScope scope = new(TransactionScopeAsyncFlowOption.Enabled))
                 {
 
-                    string imagePath = null!;
+                    string? imagePath = null!;
 
                     if (imageFile != null && imageFile.Length > 0)
                     {
@@ -65,9 +63,9 @@ namespace api.Repository
                     BK.firstStation = data.firstStation;
                     BK.lastStation = data.lastStation;
                     BK.roadDesc = data.roadDesc;
-                    BK.timeOut = data.timeOut; 
+                    BK.timeOut = data.timeOut;
                     BK.roadImage = imagePath;
-                    
+
 
                     if (action == "CREATE")
                     {
@@ -157,6 +155,86 @@ namespace api.Repository
             {
                 throw new Exception("Error on UploadImage : " + ex.Message);
             }
+        }
+
+        public async Task<Result> DeleteHub(Cars data, string? action)
+        {
+            try
+            {
+                switch (action)
+                {
+                    case "Bangkhen":
+                        var BangKhenDelete = await _AppdbContext.BangKhen.FirstOrDefaultAsync(x => x.id == data.id);
+                        if (BangKhenDelete != null)
+                        {
+                            _AppdbContext.BangKhen.Remove(BangKhenDelete);
+
+
+                            await _AppdbContext.SaveChangesAsync();
+
+                            return new Result
+                            {
+                                success = true,
+                                result = "ลบข้อมูลสำเร็จ"
+                            };
+                        }
+                        break;
+
+                    case "Monument":
+
+
+                        var MonumentDelete = await _AppdbContext.Monument.FirstOrDefaultAsync(x => x.id == data.id);
+                        if (MonumentDelete != null)
+                        {
+                            _AppdbContext.Monument.Remove(MonumentDelete);
+
+
+                            await _AppdbContext.SaveChangesAsync();
+
+                            return new Result
+                            {
+                                success = true,
+                                result = "ลบข้อมูลสำเร็จ"
+                            };
+                        }
+
+                        break;
+
+                    case "Morchit":
+
+                        var MorchitDelete = await _AppdbContext.Morchit.FirstOrDefaultAsync(x => x.id == data.id);
+                        if (MorchitDelete != null)
+                        {
+                            _AppdbContext.Morchit.Remove(MorchitDelete);
+
+
+                            await _AppdbContext.SaveChangesAsync();
+
+                            return new Result
+                            {
+                                success = true,
+                                result = "ลบข้อมูลสำเร็จ"
+                            };
+                        }
+                        break;
+                }
+
+                return new Result
+                {
+                    success = false,
+                    result = "ไม่สามารถลบข้อมูลสำเร็จ"
+                };
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error on DeleteData" + ex.Message);
+            }
+        }
+
+        public Task<Result> deleteData(Cars data)
+        {
+            return DeleteHub(data, "Bangkhen");
         }
     }
 

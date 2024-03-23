@@ -34,6 +34,13 @@ namespace api.Controllers
             return (res.success) ? Ok(res) : BadRequest(res);
         }
 
+        [HttpDelete]
+        public async Task<IActionResult> DeleteData (Cars data, string? action = "Monument")
+        {
+            var res = await _IMonumentRepository.deleteData(data, action);
+            return (res.success) ? Ok(res) : BadRequest(res);
+        }
+
         
     }
 }
