@@ -14,7 +14,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace api.Repository
 {
-    public class CarsBangkhenRepository : ICarsBangkhenRepository
+    public class CarsBangkhenRepository : IBangkhenRepository
     {
         private readonly AppDbContext _AppdbContext;
 
@@ -23,7 +23,7 @@ namespace api.Repository
             _AppdbContext = AppdbContext;
         }
 
-        public async Task<Result> saveData(BangKhen data, string? action, IFormFile imageFile)
+        public async Task<Result> saveData(Cars data, string? action, IFormFile imageFile)
         {
             try
             {
@@ -52,22 +52,22 @@ namespace api.Repository
                 using (TransactionScope scope = new(TransactionScopeAsyncFlowOption.Enabled))
                 {
 
-                    string imagePath = null;
+                    string imagePath = null!;
 
                     if (imageFile != null && imageFile.Length > 0)
                     {
                         imagePath = await UploadImage(imageFile);
                     }
 
-
                     BangKhenModel BK = new();
                     BK.id = data.id!;
                     BK.number = data.number;
-                    BK.fristStation = data.fristStation;
+                    BK.firstStation = data.firstStation;
                     BK.lastStation = data.lastStation;
                     BK.roadDesc = data.roadDesc;
-                    BK.timeOut = data.timeOut;
+                    BK.timeOut = data.timeOut; 
                     BK.roadImage = imagePath;
+                    
 
                     if (action == "CREATE")
                     {
@@ -110,19 +110,19 @@ namespace api.Repository
 
         }
 
-        public Task<Result> createData(BangKhen data)
+        public Task<Result> createData(Cars data)
         {
-            return saveData(data, "CREATE", data.roadImage);
+            return saveData(data, "CREATE", data.roadImage!);
         }
 
-        public Task<Result> updateData(BangKhen data)
+        public Task<Result> updateData(Cars data)
         {
-            return saveData(data, "UPDATE", data.roadImage);
+            return saveData(data, "UPDATE", data.roadImage!);
         }
 
-        public async Task<string?> ValidateData(BangKhen data)
+        public async Task<string?> ValidateData(Cars data)
         {
-            if (String.IsNullOrEmpty(data.fristStation)) return "กรุณากรอกชื่อสถานีต้นทาง";
+            if (String.IsNullOrEmpty(data.firstStation)) return "กรุณากรอกชื่อสถานีต้นทาง";
             if (String.IsNullOrEmpty(data.lastStation)) return "กรุณากรอกชื่อสถานีปลายทาง";
             if (String.IsNullOrEmpty(data.number)) return "กรุณากรอกเลขรถประจำทาง";
             if (data.timeOut == null || data.timeOut == DateTime.MinValue) return "กรุณากรอกเวลารถออก";
@@ -131,7 +131,7 @@ namespace api.Repository
 
         }
 
-        public async Task<string> UploadImage(IFormFile file)
+        public async Task<string?> UploadImage(IFormFile file)
         {
             try
             {
@@ -155,7 +155,7 @@ namespace api.Repository
             }
             catch (Exception ex)
             {
-                throw new Exception("Error on CreateData : " + ex.Message);
+                throw new Exception("Error on UploadImage : " + ex.Message);
             }
         }
     }

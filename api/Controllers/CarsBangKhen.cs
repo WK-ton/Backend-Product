@@ -12,22 +12,22 @@ namespace api.Controllers
     [Route("api/[controller]/[action]")]
     public class CarsBangKhen : ControllerBase
     {
-        private readonly ICarsBangkhenRepository _ICarsBangkhenRepository;
+        private readonly IBangkhenRepository _ICarsBangkhenRepository;
 
-        public CarsBangKhen(ICarsBangkhenRepository ICarsBangkhenRepository)
+        public CarsBangKhen(IBangkhenRepository IBangkhenRepository)
         {
-            _ICarsBangkhenRepository = ICarsBangkhenRepository;
+            _ICarsBangkhenRepository = IBangkhenRepository;
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateData(BangKhen data)
+        public async Task<IActionResult> CreateData(Cars data)
         {
             var res = await _ICarsBangkhenRepository.createData(data);
             return (res.success) ? Ok(res) : BadRequest(res);
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateData(BangKhen data)
+        public async Task<IActionResult> UpdateData(Cars data)
         {
             var res = await _ICarsBangkhenRepository.updateData(data);
             return (res.success) ? Ok(res) : BadRequest(res);

@@ -61,7 +61,7 @@ namespace api.Repository
                         S.email = data.email;
                         S.password = BCrypt.Net.BCrypt.HashPassword(data.password, BCrypt.Net.BCrypt.GenerateSalt(10));
                         S.passwordRepeat = BCrypt.Net.BCrypt.HashPassword(data.passwordRepeat, BCrypt.Net.BCrypt.GenerateSalt(10));
-                        // S.phone = data.phone;
+                        S.phone = data.phone;
                         S.image = data.image;
                     }
 
@@ -143,7 +143,7 @@ namespace api.Repository
                 if (data.passwordRepeat.Length < 6) return "กรุณากรอกรหัสผ่านอย่างน้อย 6 ตัวอักษร";
                 if (data.password != data.passwordRepeat) return "รหัสผ่านของคุณไม่ตรงกัน";
 
-                var email = await CheckerData(data.email, null);
+                var email = await CheckerData(data.email, null!);
                 if (email == true) return "อีเมลใช้งานแล้ว";
             }
 
@@ -225,17 +225,9 @@ namespace api.Repository
                     {
                         success = true,
                         result = "ส่ง OTP สําเร็จ"
-                        //result = new { token, username = res.name }
                     };
                 }
 
-                // string token = CreateToken(res);
-
-                // return new Result
-                // {
-                //     success = true,
-                //     result = new { token, username = res.name }
-                // };
             }
             catch (Exception ex)
             {

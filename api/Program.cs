@@ -9,7 +9,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 //interface
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
-builder.Services.AddScoped<ICarsBangkhenRepository, CarsBangkhenRepository>();
+builder.Services.AddScoped<IBangkhenRepository, CarsBangkhenRepository>();
+builder.Services.AddScoped<IMorchitRepository, CarsMorchitRepository>();
+builder.Services.AddScoped<IMonumentRepository, CarsMonumentRepository>();
+
+
 
 
 builder.Services.AddEndpointsApiExplorer();

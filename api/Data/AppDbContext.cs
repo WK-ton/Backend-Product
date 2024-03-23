@@ -10,10 +10,12 @@ namespace api.Data
 {
     public class AppDbContext : DbContext
     {
-        public AppDbContext(DbContextOptions options) : base(options) {}
-        public DbSet<SignUp> signUp {get; set;} 
-        public DbSet<BangKhenModel> BangKhen {get; set;}
-        public DbSet<SaveOTP> saveOtp {get; set;} 
-        
+        public AppDbContext(DbContextOptions options) : base(options) { }
+        public DbSet<SignUp> signUp { get; set; }
+        public DbSet<BangKhenModel> BangKhen { get; set; }
+        public DbSet<SaveOTP> saveOtp { get; set; }
+        public DbSet<MorchitModel> Morchit { get; set; }
+        public DbSet<MonumentModel> Monument {get; set;}
+
     }
 }
