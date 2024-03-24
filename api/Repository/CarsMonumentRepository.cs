@@ -15,11 +15,14 @@ namespace api.Repository
 
         private readonly AppDbContext _AppDbContext;
         private readonly IBangkhenRepository _IBangkhenRepository;
+        private readonly IComponentsRepository _IComponenetsRepository;
 
-        public CarsMonumentRepository(AppDbContext AppDbContext, IBangkhenRepository IBangkhenRepository)
+
+        public CarsMonumentRepository(AppDbContext AppDbContext, IBangkhenRepository IBangkhenRepository, IComponentsRepository IComponenetsRepository)
         {
             _AppDbContext = AppDbContext;
             _IBangkhenRepository = IBangkhenRepository;
+            _IComponenetsRepository = IComponenetsRepository;
         }
 
 
@@ -27,6 +30,8 @@ namespace api.Repository
         {
             try
             {
+                var res = _AppDbContext.Monument.Where(x => x.id == data.id).Select(x => x.roadImage).FirstOrDefault();
+
                 string? validate = await _IBangkhenRepository.ValidateData(data);
                 if (validate != null)
                 {
@@ -53,7 +58,7 @@ namespace api.Repository
                     m.lastStation = data.lastStation;
                     m.roadDesc = data.roadDesc;
                     m.timeOut = data.timeOut;
-                    m.roadImage = imagePath;
+                    m.roadImage = action == "UPDATE" && imageFile == null ? res : imagePath;
 
                     if (action == "CREATE")
                     {
@@ -109,7 +114,7 @@ namespace api.Repository
 
         public async Task<Result> deleteData(Cars data, string? action)
         {
-            var res = await _IBangkhenRepository.DeleteHub(data, action);
+            var res = await _IComponenetsRepository.ComponentDelete(data, action);
             if (res != null)
             {
                 return new Result
@@ -123,7 +128,43 @@ namespace api.Repository
                 return new Result
                 {
                     success = false,
-                    result = "ลบข้อมูลไม่สำเร็จ"
+                    result = "ไม่พบข้อมูล"
+                };
+            }
+        }
+
+        public async Task<Result> getMainCars(string? action)
+        {
+            var res = _IComponenetsRepository.ComponentGetData(action);
+            if (res != null)
+            {
+                return await res;
+
+            }
+            else
+            {
+                return new Result
+                {
+                    success = false,
+                    result = "ไม่พบข้อมูล"
+                };
+            }
+
+        }
+
+        public async Task<Result> getMainByID(int? id, string? action)
+        {
+            var res = _IComponenetsRepository.ComponentGetByID(id, action);
+            if (res != null)
+            {
+                return await res;
+            }
+            else
+            {
+                return new Result
+                {
+                    success = false,
+                    result = "ไม่พบข้อมูล"
                 };
             }
         }

@@ -12,6 +12,7 @@ builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<IBangkhenRepository, CarsBangkhenRepository>();
 builder.Services.AddScoped<IMorchitRepository, CarsMorchitRepository>();
 builder.Services.AddScoped<IMonumentRepository, CarsMonumentRepository>();
+builder.Services.AddScoped<IComponentsRepository, ComponentsRepository>();
 
 
 

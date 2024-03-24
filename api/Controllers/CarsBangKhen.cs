@@ -34,9 +34,21 @@ namespace api.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeleteData(Cars data)
+        public async Task<IActionResult> DeleteData(Cars data, string? action = "BangKhen")
         {
-            var res = await _ICarsBangkhenRepository.deleteData(data);
+            var res = await _ICarsBangkhenRepository.deleteData(data, action);
+            return (res.success) ? Ok(res) : BadRequest(res);
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetMainData(string? action = "BangKhen")
+        {
+            var res= await _ICarsBangkhenRepository.getMainCars(action);
+            return (res.success) ? Ok(res) : BadRequest(res);
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetMainDataByID(int? id, string? action = "BangKhen")
+        {
+            var res = await _ICarsBangkhenRepository.getMainByID(id, action);
             return (res.success) ? Ok(res) : BadRequest(res);
         }
     }

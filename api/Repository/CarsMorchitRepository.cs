@@ -14,19 +14,24 @@ namespace api.Repository
     public class CarsMorchitRepository : IMorchitRepository
     {
         private readonly AppDbContext _AppDbContext;
-        private readonly IBangkhenRepository _ICarsBangkhenRepository;
+        private readonly IBangkhenRepository _IBangkhenRepository;
+        private readonly IComponentsRepository _IComponenetsRepository;
 
-        public CarsMorchitRepository(AppDbContext AppdbContext, IBangkhenRepository IBangkhenRepository)
+
+        public CarsMorchitRepository(AppDbContext AppDbContext, IBangkhenRepository IBangkhenRepository, IComponentsRepository IComponenetsRepository)
         {
-            _AppDbContext = AppdbContext;
-            _ICarsBangkhenRepository = IBangkhenRepository;
+            _AppDbContext = AppDbContext;
+            _IBangkhenRepository = IBangkhenRepository;
+            _IComponenetsRepository = IComponenetsRepository;
         }
 
         public async Task<Result> saveData(Cars data, string? action, IFormFile imageFile)
         {
             try
             {
-                string? validate = await _ICarsBangkhenRepository.ValidateData(data);
+                var res = _AppDbContext.Morchit.Where(x => x.id == data.id).Select(x => x.roadImage).FirstOrDefault();
+
+                string? validate = await _IBangkhenRepository.ValidateData(data);
                 if (validate != null)
                 {
                     return new Result
@@ -44,7 +49,7 @@ namespace api.Repository
 
                     if (imageFile != null && imageFile.Length > 0)
                     {
-                        imagePath = await _ICarsBangkhenRepository.UploadImage(imageFile);
+                        imagePath = await _IBangkhenRepository.UploadImage(imageFile);
                     }
 
                     MorchitModel m = new();
@@ -54,7 +59,7 @@ namespace api.Repository
                     m.lastStation = data.lastStation;
                     m.roadDesc = data.roadDesc;
                     m.timeOut = data.timeOut;
-                    m.roadImage = imagePath;
+                    m.roadImage = action == "UPDATE" && imageFile == null ? res : imagePath;
 
                     if (action == "CREATE")
                     {
@@ -106,9 +111,9 @@ namespace api.Repository
             return saveData(data, "UPDATE", data.roadImage!);
         }
 
-        public async Task<Result> deleteData (Cars data, string? action)
+        public async Task<Result> deleteData(Cars data, string? action)
         {
-            var res = await _ICarsBangkhenRepository.DeleteHub(data, action);
+            var res = await _IComponenetsRepository.ComponentDelete(data, action);
             if (res != null)
             {
                 return new Result
@@ -122,7 +127,41 @@ namespace api.Repository
                 return new Result
                 {
                     success = false,
-                    result = "ลบข้อมูลไม่สำเร็จ"
+                    result = "ไม่พบข้อมูล"
+                };
+            }
+        }
+
+        public async Task<Result> getMainCars(string? action)
+        {
+            var res = _IComponenetsRepository.ComponentGetData(action);
+            if (res != null)
+            {
+                return await res;
+            }
+            else
+            {
+                return new Result
+                {
+                    success = false,
+                    result = "ไม่พบข้อมูล"
+                };
+            }
+        }
+
+        public async Task<Result> getMainByID(int? id, string? action)
+        {
+            var res = _IComponenetsRepository.ComponentGetByID(id, action);
+            if (res != null)
+            {
+                return await res;
+            }
+            else
+            {
+                return new Result
+                {
+                    success = false,
+                    result = "ไม่พบข้อมูล"
                 };
             }
         }

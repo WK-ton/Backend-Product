@@ -41,6 +41,20 @@ namespace api.Controllers
             return (res.success) ? Ok(res) : BadRequest(res);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetMainData(string? action = "Monument")
+        {
+            var res= await _IMonumentRepository.getMainCars(action);
+            return (res.success) ? Ok(res) : BadRequest(res);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetMainDataByID(int? id, string? action = "Monument")
+        {
+            var res= await _IMonumentRepository.getMainByID(id, action);
+            return (res.success) ? Ok(res) : BadRequest(res);
+        }
+
         
     }
 }

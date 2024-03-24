@@ -17,10 +17,12 @@ namespace api.Repository
     public class CarsBangkhenRepository : IBangkhenRepository
     {
         private readonly AppDbContext _AppdbContext;
+        private readonly IComponentsRepository _IComponenetsRepository;
 
-        public CarsBangkhenRepository(AppDbContext AppdbContext)
+        public CarsBangkhenRepository(AppDbContext AppdbContext, IComponentsRepository IComponenetsRepository)
         {
             _AppdbContext = AppdbContext;
+            _IComponenetsRepository = IComponenetsRepository;
         }
 
         public async Task<Result> saveData(Cars data, string? action, IFormFile imageFile)
@@ -49,8 +51,9 @@ namespace api.Repository
 
                 using (TransactionScope scope = new(TransactionScopeAsyncFlowOption.Enabled))
                 {
+                    var res =  _AppdbContext.BangKhen.Where(x => x.id == data.id).Select(x => x.roadImage).FirstOrDefault();
 
-                    string? imagePath = null!;
+                    string? imagePath = null;
 
                     if (imageFile != null && imageFile.Length > 0)
                     {
@@ -64,8 +67,7 @@ namespace api.Repository
                     BK.lastStation = data.lastStation;
                     BK.roadDesc = data.roadDesc;
                     BK.timeOut = data.timeOut;
-                    BK.roadImage = imagePath;
-
+                    BK.roadImage = action == "UPDATE" && imageFile == null ? res : imagePath;
 
                     if (action == "CREATE")
                     {
@@ -73,7 +75,7 @@ namespace api.Repository
                     }
                     else if (action == "UPDATE")
                     {
-                        _AppdbContext.BangKhen.Update(BK);
+                        _AppdbContext.BangKhen.UpdateRange(BK);
                     }
 
                     await _AppdbContext.SaveChangesAsync();
@@ -135,7 +137,7 @@ namespace api.Repository
             {
                 if (file == null || file.Length == 0)
                 {
-                    return "ไม่มีไฟล์อัพโหลด";
+                    return null; ;
                 }
 
                 string fileName = "_" + Guid.NewGuid().ToString() + Path.GetFileName(file.FileName); string uploadFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images");
@@ -157,87 +159,61 @@ namespace api.Repository
             }
         }
 
-        public async Task<Result> DeleteHub(Cars data, string? action)
+        public async Task<Result> deleteData(Cars data, string? action)
         {
-            try
+            var res = await _IComponenetsRepository.ComponentDelete(data, action);
+            if (res != null)
             {
-                switch (action)
+                return new Result
                 {
-                    case "Bangkhen":
-                        var BangKhenDelete = await _AppdbContext.BangKhen.FirstOrDefaultAsync(x => x.id == data.id);
-                        if (BangKhenDelete != null)
-                        {
-                            _AppdbContext.BangKhen.Remove(BangKhenDelete);
-
-
-                            await _AppdbContext.SaveChangesAsync();
-
-                            return new Result
-                            {
-                                success = true,
-                                result = "ลบข้อมูลสำเร็จ"
-                            };
-                        }
-                        break;
-
-                    case "Monument":
-
-
-                        var MonumentDelete = await _AppdbContext.Monument.FirstOrDefaultAsync(x => x.id == data.id);
-                        if (MonumentDelete != null)
-                        {
-                            _AppdbContext.Monument.Remove(MonumentDelete);
-
-
-                            await _AppdbContext.SaveChangesAsync();
-
-                            return new Result
-                            {
-                                success = true,
-                                result = "ลบข้อมูลสำเร็จ"
-                            };
-                        }
-
-                        break;
-
-                    case "Morchit":
-
-                        var MorchitDelete = await _AppdbContext.Morchit.FirstOrDefaultAsync(x => x.id == data.id);
-                        if (MorchitDelete != null)
-                        {
-                            _AppdbContext.Morchit.Remove(MorchitDelete);
-
-
-                            await _AppdbContext.SaveChangesAsync();
-
-                            return new Result
-                            {
-                                success = true,
-                                result = "ลบข้อมูลสำเร็จ"
-                            };
-                        }
-                        break;
-                }
-
+                    success = true,
+                    result = "ลบข้อมูลสำเร็จ"
+                };
+            }
+            else
+            {
                 return new Result
                 {
                     success = false,
-                    result = "ไม่สามารถลบข้อมูลสำเร็จ"
+                    result = "ไม่พบข้อมูล"
                 };
-
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error on DeleteData" + ex.Message);
             }
         }
 
-        public Task<Result> deleteData(Cars data)
+        public async Task<Result> getMainCars(string? action)
         {
-            return DeleteHub(data, "Bangkhen");
+            var res = _IComponenetsRepository.ComponentGetData(action);
+            if (res != null)
+            {
+                return await res;
+            }
+            else
+            {
+                return new Result
+                {
+                    success = false,
+                    result = "ไม่พบข้อมูล"
+                };
+            }
+        }
+
+        public async Task<Result> getMainByID(int? id, string? action)
+        {
+            var res = _IComponenetsRepository.ComponentGetByID(id, action);
+            if (res != null)
+            {
+                return await res;
+            }
+            else
+            {
+                return new Result
+                {
+                    success = false,
+                    result = "ไม่พบข้อมูล"
+                };
+            }
+
         }
     }
-
-
 
 }
