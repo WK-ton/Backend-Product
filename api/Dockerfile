@@ -13,7 +13,7 @@ ENV ASPNETCORE_URLS=http://+:5183
 USER app
 
 #copy ไฟล์จาก local ไปยัง container
-COPY wwwroot/images /app/wwwroot/images
+# COPY wwwroot/images /app/wwwroot/images
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0-alpine3.18 AS build
 

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "IV8V5fHYxeQuYnudmkSFfsrZF9AK3Ze/TiyUEFgoEME=",
+  "Hash": "IHzhJhrfqtQN1uPIukySVQ5QB6ynhYiK56jvOuF9kt8=",
   "Source": "api",
   "BasePath": "_content/api",
   "Mode": "Default",
@@ -10,7 +10,7 @@
     {
       "Name": "api/wwwroot",
       "Source": "api",
-      "ContentRoot": "/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/wwwroot/",
+      "ContentRoot": "/Users/worapongkeawphanit/Desktop/Backend-Product/api/wwwroot/",
       "BasePath": "_content/api",
       "Pattern": "**"
     }

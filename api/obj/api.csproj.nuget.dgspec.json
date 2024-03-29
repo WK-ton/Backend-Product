@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/api.csproj": {}
+    "/Users/worapongkeawphanit/Desktop/Backend-Product/api/api.csproj": {}
   },
   "projects": {
-    "/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/api.csproj": {
+    "/Users/worapongkeawphanit/Desktop/Backend-Product/api/api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/api.csproj",
+        "projectUniqueName": "/Users/worapongkeawphanit/Desktop/Backend-Product/api/api.csproj",
         "projectName": "api",
-        "projectPath": "/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/api.csproj",
+        "projectPath": "/Users/worapongkeawphanit/Desktop/Backend-Product/api/api.csproj",
         "packagesPath": "/Users/worapongkeawphanit/.nuget/packages/",
-        "outputPath": "/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/obj/",
+        "outputPath": "/Users/worapongkeawphanit/Desktop/Backend-Product/api/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/worapongkeawphanit/.nuget/NuGet/NuGet.Config"

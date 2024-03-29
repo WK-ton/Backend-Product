@@ -43,7 +43,6 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=0959146936
       - MYSQL_DATABASE=Product
-      - MYSQL_USER=root
       - MYSQL_PASSWORD=0959146936
 
     ports:
