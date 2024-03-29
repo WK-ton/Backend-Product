@@ -1,152 +1,24 @@
 {
   "Files": [
     {
-      "Id": "/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/wwwroot/images/_00e72bbd-62ab-43a7-86e2-787ca325e5b7IMG_0968.jpg",
-      "PackagePath": "staticwebassets/images/_00e72bbd-62ab-43a7-86e2-787ca325e5b7IMG_0968.jpg"
+      "Id": "/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/wwwroot/images/_2bbd930c-ea32-4dda-aa3c-91304ce13f99IMG_0971.jpg",
+      "PackagePath": "staticwebassets/images/_2bbd930c-ea32-4dda-aa3c-91304ce13f99IMG_0971.jpg"
     },
     {
-      "Id": "/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/wwwroot/images/_028bbc21-5512-4bde-b7b2-3fe47b197ed5IMG_0971.jpg",
-      "PackagePath": "staticwebassets/images/_028bbc21-5512-4bde-b7b2-3fe47b197ed5IMG_0971.jpg"
+      "Id": "/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/wwwroot/images/_3123d2ad-a708-49c6-8eae-d1f6d7ffdb8aIMG_0971.jpg",
+      "PackagePath": "staticwebassets/images/_3123d2ad-a708-49c6-8eae-d1f6d7ffdb8aIMG_0971.jpg"
     },
     {
-      "Id": "/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/wwwroot/images/_06ff91f6-a117-48a0-8429-74a04d848489IMG_0968.jpg",
-      "PackagePath": "staticwebassets/images/_06ff91f6-a117-48a0-8429-74a04d848489IMG_0968.jpg"
+      "Id": "/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/wwwroot/images/_6c9400ec-6da1-49f5-92c2-f89615b470ecIMG_0971.jpg",
+      "PackagePath": "staticwebassets/images/_6c9400ec-6da1-49f5-92c2-f89615b470ecIMG_0971.jpg"
     },
     {
-      "Id": "/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/wwwroot/images/_095160a5-f4d3-481a-a60b-0aef06a8b4b9IMG_0968.jpg",
-      "PackagePath": "staticwebassets/images/_095160a5-f4d3-481a-a60b-0aef06a8b4b9IMG_0968.jpg"
+      "Id": "/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/wwwroot/images/_9c0a7ec4-67d4-4234-ac89-ad0981ced4c1IMG_0971.jpg",
+      "PackagePath": "staticwebassets/images/_9c0a7ec4-67d4-4234-ac89-ad0981ced4c1IMG_0971.jpg"
     },
     {
-      "Id": "/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/wwwroot/images/_0fd71a61-06b6-48c2-8298-bcee1124b893IMG_0971.jpg",
-      "PackagePath": "staticwebassets/images/_0fd71a61-06b6-48c2-8298-bcee1124b893IMG_0971.jpg"
-    },
-    {
-      "Id": "/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/wwwroot/images/_12b1d358-64fe-4770-941c-8d49f9a016cdIMG_0971.jpg",
-      "PackagePath": "staticwebassets/images/_12b1d358-64fe-4770-941c-8d49f9a016cdIMG_0971.jpg"
-    },
-    {
-      "Id": "/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/wwwroot/images/_132bd4a6-c7ad-457d-9a3b-83cfe3ef1881IMG_0968.jpg",
-      "PackagePath": "staticwebassets/images/_132bd4a6-c7ad-457d-9a3b-83cfe3ef1881IMG_0968.jpg"
-    },
-    {
-      "Id": "/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/wwwroot/images/_1428f129-d27d-421b-a64a-462c8baa5433IMG_0971.jpg",
-      "PackagePath": "staticwebassets/images/_1428f129-d27d-421b-a64a-462c8baa5433IMG_0971.jpg"
-    },
-    {
-      "Id": "/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/wwwroot/images/_16e4da18-547b-450f-be44-66482c812e58IMG_0971.jpg",
-      "PackagePath": "staticwebassets/images/_16e4da18-547b-450f-be44-66482c812e58IMG_0971.jpg"
-    },
-    {
-      "Id": "/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/wwwroot/images/_435269e0-7887-4b76-b105-e5b8e3affe5eIMG_1020.JPG",
-      "PackagePath": "staticwebassets/images/_435269e0-7887-4b76-b105-e5b8e3affe5eIMG_1020.JPG"
-    },
-    {
-      "Id": "/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/wwwroot/images/_4dc7c5f0-9288-430b-939d-be11baf2cf48IMG_0968.jpg",
-      "PackagePath": "staticwebassets/images/_4dc7c5f0-9288-430b-939d-be11baf2cf48IMG_0968.jpg"
-    },
-    {
-      "Id": "/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/wwwroot/images/_50b2d2c4-b8d2-4e6b-be88-128a94838753IMG_1020.JPG",
-      "PackagePath": "staticwebassets/images/_50b2d2c4-b8d2-4e6b-be88-128a94838753IMG_1020.JPG"
-    },
-    {
-      "Id": "/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/wwwroot/images/_52dab23b-f44d-4357-b4e7-bf76ed26b3faIMG_0971.jpg",
-      "PackagePath": "staticwebassets/images/_52dab23b-f44d-4357-b4e7-bf76ed26b3faIMG_0971.jpg"
-    },
-    {
-      "Id": "/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/wwwroot/images/_5851e4f4-2606-4d4b-b773-a51b2c9bc118IMG_1044.JPG",
-      "PackagePath": "staticwebassets/images/_5851e4f4-2606-4d4b-b773-a51b2c9bc118IMG_1044.JPG"
-    },
-    {
-      "Id": "/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/wwwroot/images/_5e160a26-49a8-4669-ae60-92cd456f9de4IMG_0971.jpg",
-      "PackagePath": "staticwebassets/images/_5e160a26-49a8-4669-ae60-92cd456f9de4IMG_0971.jpg"
-    },
-    {
-      "Id": "/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/wwwroot/images/_5e45a6e9-7cdf-44e5-ba4b-c214e22fc2acIMG_0971.jpg",
-      "PackagePath": "staticwebassets/images/_5e45a6e9-7cdf-44e5-ba4b-c214e22fc2acIMG_0971.jpg"
-    },
-    {
-      "Id": "/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/wwwroot/images/_65216059-b1cf-43be-bdc1-ad003936b09cIMG_0971.jpg",
-      "PackagePath": "staticwebassets/images/_65216059-b1cf-43be-bdc1-ad003936b09cIMG_0971.jpg"
-    },
-    {
-      "Id": "/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/wwwroot/images/_66dad2f3-ee44-4d18-b33a-343467f7f7e0IMG_0971.jpg",
-      "PackagePath": "staticwebassets/images/_66dad2f3-ee44-4d18-b33a-343467f7f7e0IMG_0971.jpg"
-    },
-    {
-      "Id": "/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/wwwroot/images/_6aa82925-dfa9-4dbb-9e9c-c087d24a24c9IMG_0971.jpg",
-      "PackagePath": "staticwebassets/images/_6aa82925-dfa9-4dbb-9e9c-c087d24a24c9IMG_0971.jpg"
-    },
-    {
-      "Id": "/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/wwwroot/images/_6bcbee28-0159-4517-ac67-a36cb102e65bIMG_0971.jpg",
-      "PackagePath": "staticwebassets/images/_6bcbee28-0159-4517-ac67-a36cb102e65bIMG_0971.jpg"
-    },
-    {
-      "Id": "/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/wwwroot/images/_7609f9dc-c978-4f19-9a60-4607fa21bf8eIMG_0971.jpg",
-      "PackagePath": "staticwebassets/images/_7609f9dc-c978-4f19-9a60-4607fa21bf8eIMG_0971.jpg"
-    },
-    {
-      "Id": "/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/wwwroot/images/_7693dc48-0fd3-499c-9253-5916ea4695f4IMG_0968.jpg",
-      "PackagePath": "staticwebassets/images/_7693dc48-0fd3-499c-9253-5916ea4695f4IMG_0968.jpg"
-    },
-    {
-      "Id": "/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/wwwroot/images/_796787d5-752a-439a-8c84-93f9dfd81773IMG_0971.jpg",
-      "PackagePath": "staticwebassets/images/_796787d5-752a-439a-8c84-93f9dfd81773IMG_0971.jpg"
-    },
-    {
-      "Id": "/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/wwwroot/images/_79e0ca89-9ca5-4c10-9566-d227f0675e3cIMG_0968.jpg",
-      "PackagePath": "staticwebassets/images/_79e0ca89-9ca5-4c10-9566-d227f0675e3cIMG_0968.jpg"
-    },
-    {
-      "Id": "/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/wwwroot/images/_7fe58854-6683-4307-9e62-c90690f1ec3bIMG_0968.jpg",
-      "PackagePath": "staticwebassets/images/_7fe58854-6683-4307-9e62-c90690f1ec3bIMG_0968.jpg"
-    },
-    {
-      "Id": "/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/wwwroot/images/_7feb388b-86f9-4653-949e-f7f40771d79eIMG_0971.jpg",
-      "PackagePath": "staticwebassets/images/_7feb388b-86f9-4653-949e-f7f40771d79eIMG_0971.jpg"
-    },
-    {
-      "Id": "/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/wwwroot/images/_8d1947da-9109-4c58-b5b2-db85440132efIMG_0971.jpg",
-      "PackagePath": "staticwebassets/images/_8d1947da-9109-4c58-b5b2-db85440132efIMG_0971.jpg"
-    },
-    {
-      "Id": "/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/wwwroot/images/_983e55d1-f882-4f0f-8969-a09da284c179IMG_0971.jpg",
-      "PackagePath": "staticwebassets/images/_983e55d1-f882-4f0f-8969-a09da284c179IMG_0971.jpg"
-    },
-    {
-      "Id": "/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/wwwroot/images/_a01e737b-5e85-41ce-ad47-8b72a2f70665IMG_1020.JPG",
-      "PackagePath": "staticwebassets/images/_a01e737b-5e85-41ce-ad47-8b72a2f70665IMG_1020.JPG"
-    },
-    {
-      "Id": "/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/wwwroot/images/_a3cf723b-dd69-4281-b3e9-24e63b259e08IMG_0971.jpg",
-      "PackagePath": "staticwebassets/images/_a3cf723b-dd69-4281-b3e9-24e63b259e08IMG_0971.jpg"
-    },
-    {
-      "Id": "/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/wwwroot/images/_a73b0787-7348-49be-9c3b-ff4fa332e380IMG_0971.jpg",
-      "PackagePath": "staticwebassets/images/_a73b0787-7348-49be-9c3b-ff4fa332e380IMG_0971.jpg"
-    },
-    {
-      "Id": "/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/wwwroot/images/_b4b5a475-7ad5-429f-a426-781ae57482c1IMG_0971.jpg",
-      "PackagePath": "staticwebassets/images/_b4b5a475-7ad5-429f-a426-781ae57482c1IMG_0971.jpg"
-    },
-    {
-      "Id": "/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/wwwroot/images/_c7bc7d8c-4b19-4a53-bd1d-75a2bb2d184fIMG_0971.jpg",
-      "PackagePath": "staticwebassets/images/_c7bc7d8c-4b19-4a53-bd1d-75a2bb2d184fIMG_0971.jpg"
-    },
-    {
-      "Id": "/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/wwwroot/images/_cf557ceb-7d23-4343-b322-830ba0961f70IMG_0971.jpg",
-      "PackagePath": "staticwebassets/images/_cf557ceb-7d23-4343-b322-830ba0961f70IMG_0971.jpg"
-    },
-    {
-      "Id": "/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/wwwroot/images/_dd9ec69b-2538-4596-b902-e8c6760a2188IMG_0971.jpg",
-      "PackagePath": "staticwebassets/images/_dd9ec69b-2538-4596-b902-e8c6760a2188IMG_0971.jpg"
-    },
-    {
-      "Id": "/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/wwwroot/images/_e24666a7-221a-495f-9d26-b6c0b02920a2IMG_0971.jpg",
-      "PackagePath": "staticwebassets/images/_e24666a7-221a-495f-9d26-b6c0b02920a2IMG_0971.jpg"
-    },
-    {
-      "Id": "/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/wwwroot/images/_e6d51f6e-4b9d-4a11-9f95-edd884b973d5IMG_0968.jpg",
-      "PackagePath": "staticwebassets/images/_e6d51f6e-4b9d-4a11-9f95-edd884b973d5IMG_0968.jpg"
+      "Id": "/Users/worapongkeawphanit/Desktop/Project [TMAM01000]/TMAM01000Backend/api/wwwroot/images/_9ec18960-7884-4059-b831-4580d6c57e94IMG_0971.jpg",
+      "PackagePath": "staticwebassets/images/_9ec18960-7884-4059-b831-4580d6c57e94IMG_0971.jpg"
     },
     {
       "Id": "obj/Debug/net8.0/staticwebassets/msbuild.api.Microsoft.AspNetCore.StaticWebAssets.props",

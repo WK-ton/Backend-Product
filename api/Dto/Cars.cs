@@ -15,6 +15,4 @@ namespace api.Dto
         public DateTime? timeOut {get; set;} = null;
         public IFormFile? roadImage {get; set;} = null;
     }
-    
-    
 }

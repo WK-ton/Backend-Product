@@ -26,6 +26,8 @@ builder.Services.AddSwaggerGen(c =>
 var connectionString = builder.Configuration.GetConnectionString("AppDbConnectionString");
 builder.Services.AddDbContext<AppDbContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
+// builder.Services.AddDbContext<AppDbContext>();
+
 // Add controllers service
 builder.Services.AddControllers();
 
@@ -42,11 +44,20 @@ if (app.Environment.IsDevelopment())
     app.UseRouting();
 }
 
+//allow CORS
+app.UseCors(options => 
+{
+    options.AllowAnyOrigin();
+    options.AllowAnyMethod();
+    options.AllowAnyHeader();
+
+});
+
 // Map endpoints to ProductController
 app.MapControllerRoute(
     name: "default",
     pattern: "api/{controller}/{action}/{id?}",
-    defaults: new { controller = "Product", action = "GetAllProducts" } // Assuming GetAllProducts is an action in ProductController
+    defaults: new { controller = "Product", action = "GetAllProducts" }
 );
 
 app.UseHttpsRedirection();

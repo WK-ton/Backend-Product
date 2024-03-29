@@ -13,9 +13,6 @@ namespace api.Repository.Interface
         Task<string?> ValidateData(Cars data);
         Task<string?> UploadImage(IFormFile file);
         Task<Result> deleteData(Cars data, string? action);
-        // Task<Result> ComponentDelete(Cars data, string? action);
-        // Task<Result> ComponentGetData(string? action);
-        // Task<Result> ComponentGetByID(int? id, string? action);
         Task<Result> getMainCars(string? action);
         Task<Result> getMainByID(int? id, string? action);
     }
