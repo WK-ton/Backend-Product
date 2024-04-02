@@ -16,7 +16,7 @@ pipeline {
         stage('Build Docker images') {
             steps {
                 script {
-                    sh 'docker build -t tontwitch04/api:v1.0 .'
+                    sh 'docker build -t tontwitch04/api:v2.0 .'
                 }
             }
         }
@@ -26,7 +26,7 @@ pipeline {
                     withCredentials([string(credentialsId: 'dockerhubpwd', variable: 'dockerhubpwd')]) {
                     sh 'docker login -u tontwitch04@gmail.com -p ${dockerhubpwd}'
                 }
-                    sh 'docker push tontwitch04/api:v1.0'
+                    sh 'docker push tontwitch04/api:v2.0'
                 }
             }
         }
