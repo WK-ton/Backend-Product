@@ -24,21 +24,21 @@ WORKDIR /src
 #copy ทั้งหมดจาก local ไปยัง /scr
 COPY . .
 #copy .csproj ไปยัง /src
-COPY ["api.csproj", "./"]
+COPY ["api/api.csproj", "./"]
 
 #run คำสั่ง และดึก dependencies ของ project
 RUN dotnet restore "api.csproj"
 WORKDIR "/src/."
 
 #build โปรเจ็ค และกำหนดให้ output ไปที่ /app/build
-RUN dotnet build "api.csproj" -c Release -o /app/build
+RUN dotnet build "api/api.csproj" -c Release -o /app/build
 
 #สร้าง stage จาก build stage โดยใช้ "AS publish"
 FROM build AS publish
 ARG configuration=Release
 
 #สร้่างคำสั่ง publish เพื่อสร้าง output สำหรับการ deploy ที่ 'app/publish' โดยไม่ใช้ AppHost
-RUN dotnet publish "api.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "api/api.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
