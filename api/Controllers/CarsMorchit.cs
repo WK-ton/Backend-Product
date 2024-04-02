@@ -47,11 +47,11 @@ namespace api.Controllers
             return (res.success) ? Ok(res) : BadRequest(res);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetMainDataByID(int? id, string? action = "Morchit")
-        {
-            var res = await _IMorchitRepository.getMainByID(id, action);
-            return (res.success) ? Ok(res) : BadRequest(res);
-        }
+        // [HttpGet]
+        // public async Task<IActionResult> GetMainDataByID(int? id, string? action = "Morchit")
+        // {
+        //     var res = await _IMorchitRepository.getMainByID(id, action);
+        //     return (res.success) ? Ok(res) : BadRequest(res);
+        // }
     }
 }
