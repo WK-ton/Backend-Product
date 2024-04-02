@@ -16,7 +16,7 @@ pipeline {
         stage('Build Docker images') {
             steps {
                 script {
-                    sh 'docker build -t tontwitch04/api:v2.0 .'
+                    sh 'sudo docker build -t tontwitch04/api:v2.0 .'
                 }
             }
         }
