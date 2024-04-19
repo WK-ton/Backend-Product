@@ -51,7 +51,8 @@ namespace api.Repository
 
                 using (TransactionScope scope = new(TransactionScopeAsyncFlowOption.Enabled))
                 {
-                    var res =  _AppdbContext.BangKhen.Where(x => x.id == data.id).Select(x => x.roadImage).FirstOrDefault();
+
+                    var res = _AppdbContext.BangKhen.Where(x => x.id == data.id).Select(x => x.roadImage).FirstOrDefault();
 
                     string? imagePath = null;
 
@@ -61,7 +62,23 @@ namespace api.Repository
                     }
 
                     BangKhenModel BK = new();
-                    BK.id = data.id!;
+
+                    if (action == "UPDATE")
+                    {
+                        if (res != null)
+                        {
+                            BK.id = data.id!;
+                        }
+                        else
+                        {
+                            return new Result
+                            {
+                                success = false,
+                                result = "ไม่พบข้อมูล"
+                            };
+
+                        }
+                    }
                     BK.number = data.number;
                     BK.firstStation = data.firstStation;
                     BK.lastStation = data.lastStation;
@@ -182,10 +199,10 @@ namespace api.Repository
 
         public async Task<Result> getMainCars(string? action)
         {
-            var res = _IComponenetsRepository.ComponentGetData(action);
+            var res = await _IComponenetsRepository.ComponentGetData(action);
             if (res != null)
             {
-                return await res;
+                return res;
             }
             else
             {
@@ -199,10 +216,10 @@ namespace api.Repository
 
         public async Task<Result> getMainByID(int? id, string? action)
         {
-            var res = _IComponenetsRepository.ComponentGetByID(id, action);
+            var res = await _IComponenetsRepository.ComponentGetByID(id, action);
             if (res != null)
             {
-                return await res;
+                return res;
             }
             else
             {

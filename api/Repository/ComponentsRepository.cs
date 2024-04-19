@@ -221,7 +221,7 @@ namespace api.Repository
                     case "BangKhen":
                         var resBangKhen = _AppdbContext.BangKhen.Where(x => x.id == id).ToList();
 
-                        if (resBangKhen != null)
+                        if (resBangKhen != null && resBangKhen.Count > 0)
                         {
                             return new Result
                             {
@@ -237,7 +237,7 @@ namespace api.Repository
                     case "Monument":
                         var resMonument = _AppdbContext.Monument.Where(x => x.id == id).ToList();
 
-                        if (resMonument != null)
+                        if (resMonument != null && resMonument.Count > 0)
                         {
                             return new Result
                             {
@@ -253,7 +253,7 @@ namespace api.Repository
                     case "Morchit":
                         var resMorchit = _AppdbContext.Morchit.Where(x => x.id == id).ToList();
 
-                        if (resMorchit != null)
+                        if (resMorchit != null && resMorchit.Count > 0)
                         {
                             return new Result
                             {
@@ -268,11 +268,13 @@ namespace api.Repository
 
                 }
 
+
                 return new Result
                 {
                     success = false,
                     result = "เกิดข้อผิดพลาดในการ ดึงข้อมูล"
                 };
+
 
             }
             catch (Exception ex)

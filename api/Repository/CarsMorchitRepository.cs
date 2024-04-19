@@ -53,7 +53,23 @@ namespace api.Repository
                     }
 
                     MorchitModel m = new();
-                    m.id = data.id;
+
+                    if (action == "UPDATE")
+                    {
+                        if (res != null)
+                        {
+                            m.id = data.id!;
+                        }
+                        else
+                        {
+                            return new Result
+                            {
+                                success = false,
+                                result = "ไม่พบข้อมูล"
+                            };
+
+                        }
+                    }
                     m.number = data.number;
                     m.firstStation = data.firstStation;
                     m.lastStation = data.lastStation;
@@ -134,10 +150,10 @@ namespace api.Repository
 
         public async Task<Result> getMainCars(string? action)
         {
-            var res = _IComponenetsRepository.ComponentGetData(action);
+            var res = await _IComponenetsRepository.ComponentGetData(action);
             if (res != null)
             {
-                return await res;
+                return res;
             }
             else
             {
@@ -151,10 +167,10 @@ namespace api.Repository
 
         public async Task<Result> getMainByID(int? id, string? action)
         {
-            var res = _IComponenetsRepository.ComponentGetByID(id, action);
+            var res = await _IComponenetsRepository.ComponentGetByID(id, action);
             if (res != null)
             {
-                return await res;
+                return res;
             }
             else
             {

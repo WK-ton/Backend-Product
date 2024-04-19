@@ -56,8 +56,8 @@ app.UseCors(options =>
 // Map endpoints to ProductController
 app.MapControllerRoute(
     name: "default",
-    pattern: "api/{controller}/{action}/{id?}",
-    defaults: new { controller = "Product", action = "GetAllProducts" }
+    pattern: "api/{controller}/{action}/{id?}"
+    //defaults: new { controller = "Product", action = "GetAllProducts" }
 );
 
 app.UseHttpsRedirection();

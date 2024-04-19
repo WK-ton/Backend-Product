@@ -5,37 +5,37 @@ networks:
     driver: bridge
 
 services:
-  api:
-    image: docker.io/library/api
+  # api:
+  #   image: docker.io/library/api
 
-    #ระบุ services api ต้องการใช้ db ก่อน
-    depends_on:
-      - "db"
+  #   #ระบุ services api ต้องการใช้ db ก่อน
+  #   depends_on:
+  #     - "db"
 
-    #กำหนดชื่อของ services
-    container_name: api
+  #   #กำหนดชื่อของ services
+  #   container_name: api
 
-    #ระบุว่า Docker image สำหรับ api จะถูกสร้างโดย Dockerfile ที่อยู่ใน api
-    build:
-      context: .
-      dockerfile: api/Dockerfile
+  #   #ระบุว่า Docker image สำหรับ api จะถูกสร้างโดย Dockerfile ที่อยู่ใน api
+  #   build:
+  #     context: .
+  #     dockerfile: api/Dockerfile
 
-    #พอร์ต Docker container  map กับ ของ Server
-    ports:
-      - 5183:5183
+  #   #พอร์ต Docker container  map กับ ของ Server
+  #   ports:
+  #     - 5183:5183
 
-    #กำหนดตัวแปรสภาพแวดล้อมที่อยู่ใน Docker container
-    environment:
-      - ConnectionStrings__AppDbConnectionString=server=db;port=3306;database=Product;user=root;password=0959146936;
-      - ASPNETCORE_URLS=http://+:5183
+  #   #กำหนดตัวแปรสภาพแวดล้อมที่อยู่ใน Docker container
+  #   environment:
+  #     - ConnectionStrings__AppDbConnectionString=server=db;port=3306;database=Product;user=root;password=0959146936;
+  #     - ASPNETCORE_URLS=http://+:5183
 
-    #แชร์ folder ปัจจุบันใน Server ไปยัง folder ใน Docker container
-    volumes:
-      - ./api/wwwroot/images:/app/wwwroot/images
+  #   #แชร์ folder ปัจจุบันใน Server ไปยัง folder ใน Docker container
+    # volumes:
+    #   - ./api/wwwroot/images:/app/wwwroot/images
 
-    #ระให้ Service api เป็นส่วนนึงของ networks ชื่อว่า dev
-    networks:
-     dev:
+  #   #ระให้ Service api เป็นส่วนนึงของ networks ชื่อว่า dev
+  #   networks:
+  #    dev:
 
   db:
     image: mysql:latest
@@ -54,6 +54,7 @@ services:
     #สร้าง volumes ชื่อ app_data เพื่อเก็บข้อมูลของ mysql
     volumes:
       - app_data:/usr/local/mysql/data
+      - ./api/wwwroot/images:/app/wwwroot/images
     networks:
       dev:
 
