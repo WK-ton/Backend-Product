@@ -127,6 +127,7 @@ namespace api.Repository
                             x.firstStation,
                             x.lastStation,
                             x.number,
+                            x.roadDesc,
                             x.timeOut,
                             x.roadImage
                         }).ToList().Distinct();
@@ -153,6 +154,7 @@ namespace api.Repository
                             x.firstStation,
                             x.lastStation,
                             x.number,
+                            x.roadDesc,
                             x.timeOut,
                             x.roadImage
                         }).ToList().Distinct();
@@ -179,6 +181,7 @@ namespace api.Repository
                             x.firstStation,
                             x.lastStation,
                             x.number,
+                            x.roadDesc,
                             x.timeOut,
                             x.roadImage
                         }).ToList().Distinct();

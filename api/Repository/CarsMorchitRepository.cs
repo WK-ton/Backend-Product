@@ -56,7 +56,10 @@ namespace api.Repository
 
                     if (action == "UPDATE")
                     {
-                        if (res != null)
+
+                        var idRes = data.id;
+
+                        if (idRes != null) 
                         {
                             m.id = data.id!;
                         }
@@ -67,7 +70,6 @@ namespace api.Repository
                                 success = false,
                                 result = "ไม่พบข้อมูล"
                             };
-
                         }
                     }
                     m.number = data.number;
